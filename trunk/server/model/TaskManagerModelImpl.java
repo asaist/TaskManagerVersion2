@@ -6,6 +6,7 @@ import common.entity.Coloring;
 import common.entity.Entity;
 import common.entity.Task;
 import common.service.GenericDao;
+import common.service.JDBCDaoAssignee;
 import server.view.TaskManagerView;
 
 import java.util.*;
@@ -95,6 +96,8 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
     public void addAssaignee(Assignee assignee) {
         checkAssignees(assignee);
         assignees.add(assignee);
+        JDBCDaoAssignee jdbcDaoAssignee = new JDBCDaoAssignee();
+        jdbcDaoAssignee.create((Entity) assignee);
         setChanged();
         notifyObservers();
         System.out.println("Запись добавлена в модель " + assignee.getName());

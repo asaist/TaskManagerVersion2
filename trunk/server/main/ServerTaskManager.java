@@ -1,7 +1,12 @@
 package server.main;
 
 
+import common.entity.AssigneeImpl;
+import common.entity.Entity;
+import common.entity.TaskImpl;
 import common.service.GenericDao;
+import common.service.JDBCDao;
+import common.service.JDBCDaoAssignee;
 import common.service.TextDao;
 import server.controller.TaskManagerController;
 import server.controller.TaskManagerControllerImpl;
@@ -21,19 +26,11 @@ public class ServerTaskManager {
         GenericDao txtFileWork = new TextDao();
         TaskManagerModel model = new TaskManagerModelImpl(txtFileWork);
         TaskManagerController controller = new TaskManagerControllerImpl(model);
-        //model.addAllTask(controller.isCorrectDate(txtFileWork.readAll()));
         TaskManagerView innerView = new TaskManagerViewImpl(controller, model);
-
         TaskManagerView clientDataView = new ClientDataViewImpl(controller, model);
-
-        //TaskManagerView viewClient = new ClientDataViewImpl(controller,model);
         innerView.createView();
         clientDataView.createView();
-        //viewClient.createView();
         model.addWatcher(innerView);
         model.addWatcher(clientDataView);
-
-        // model.addWatcher(viewClient);\
-
     }
 }

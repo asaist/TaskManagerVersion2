@@ -11,13 +11,12 @@ public class AssigneeImpl implements Assignee, Entity {
         this.id = idInc++;
     }
 
-    /*public AssigneeImpl(int id,String name, String lastname, String post){
-        this.id=id;
+    public AssigneeImpl(String name, String lastname, String post){
         this.name=name;
         this.lastname=lastname;
         this.post=post;
 
-    }*/
+    }
     @Override
     public Integer getId() {
         return id;

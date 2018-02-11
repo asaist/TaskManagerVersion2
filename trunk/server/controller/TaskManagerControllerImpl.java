@@ -87,10 +87,9 @@ public class TaskManagerControllerImpl implements TaskManagerController {
 
     //Assaignee
     public void addAssignee(String name, String lastName, String post) {
-        Assignee assignee = new AssigneeImpl();
+        Assignee assignee = new AssigneeImpl(name, lastName , post);
         checkFields(name, lastName, post, assignee);
         model.addAssaignee(assignee);
-        System.out.println(assignee.toString());
     }
 
 
