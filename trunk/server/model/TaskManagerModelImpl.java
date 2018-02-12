@@ -98,18 +98,42 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         assignees.add(assignee);
         JDBCDaoAssignee jdbcDaoAssignee = new JDBCDaoAssignee();
         jdbcDaoAssignee.create((Entity) assignee);
-        setChanged();
-        notifyObservers();
+        modelIsChanged();
         System.out.println("Запись добавлена в модель " + assignee.getName());
+    }
+
+    @Override
+    public void addAllAssignee(List<Entity> entities1) {
+        if (entities1 == null) {
+            System.out.println("Исполнителей пока нет");
+
+        } else {
+
+            for (Entity entity : entities1) {
+                if (entity != null) {
+                    checkAssignees((Assignee) entity);
+                    assignees.add((Assignee) entity);
+                    modelIsChanged();
+                }
+            }
+        }
     }
 
     private void checkAssignees(Assignee assignee) {
         for (Assignee assignee1 : getAssignees()) {
-            if (assignee1.equals(assignee)) {
+            try {
+                if (!assignee1.equals(assignee)) {
+                    //System.out.println("Запись корректна");
+                }
+            } catch (RuntimeException e){
                 throw new RuntimeException("a record already exists");
             }
+            }
+
+
         }
-    }
+
+
 
     @Override
     public void deleteTask(Task taskToRemove) {

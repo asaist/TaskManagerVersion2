@@ -80,7 +80,7 @@ public class AssigneeImpl implements Assignee, Entity {
 
     @Override
     public String toString() {
-        return (id + " " + name + " " + lastname + " " + post);
+        return (name + " " + lastname + " " + post);
     }
 
 

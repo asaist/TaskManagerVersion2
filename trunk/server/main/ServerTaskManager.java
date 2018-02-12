@@ -1,6 +1,7 @@
 package server.main;
 
 
+import common.entity.Assignee;
 import common.entity.AssigneeImpl;
 import common.entity.Entity;
 import common.entity.TaskImpl;
@@ -24,13 +25,15 @@ import java.util.List;
 public class ServerTaskManager {
     public static void main(String[] args) throws IOException {
         GenericDao txtFileWork = new TextDao();
+        JDBCDaoAssignee jdbcDao = new JDBCDaoAssignee();
         TaskManagerModel model = new TaskManagerModelImpl(txtFileWork);
+        model.addAllAssignee(jdbcDao.readAll());
         TaskManagerController controller = new TaskManagerControllerImpl(model);
-        TaskManagerView innerView = new TaskManagerViewImpl(controller, model);
-        TaskManagerView clientDataView = new ClientDataViewImpl(controller, model);
-        innerView.createView();
-        clientDataView.createView();
-        model.addWatcher(innerView);
-        model.addWatcher(clientDataView);
+        TaskManagerView taskManagerViewImpl = new TaskManagerViewImpl(controller, model);
+        //TaskManagerView clientDataView = new ClientDataViewImpl(controller, model);
+        taskManagerViewImpl.createView();
+       // clientDataView.createView();
+        model.addWatcher(taskManagerViewImpl);
+       // model.addWatcher(clientDataView);
     }
 }
