@@ -17,7 +17,6 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
     public Integer create(Entity newInstance) {
         Connection connection = super.connectionToDatabase();
         Assignee assignee = (Assignee) newInstance;
-        System.out.println(assignee.toString() + " dao");
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO ASSIGNEE(ID, NAME, LASTNAME, POST) VALUES (ASSIGNEE_SEQUENCE.nextval, '"+assignee.getName()+"', '"+assignee.getLastname()+"', '"+assignee.getPost()+"')");
             statement.executeUpdate();
@@ -32,7 +31,6 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
         } catch (SQLException e) {
 
         }
-        System.out.println("id " + assignee.getId());
         return assignee.getId();
     }
 
@@ -109,6 +107,7 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
                 assignee.setLastname(resultSet.getString("LASTNAME"));
                 assignee.setPost(resultSet.getString("POST"));
                 entitys.add((Entity) assignee);
+                System.out.println("Запись " + assignee.toString() + " загружена");
             }
             statement.close();
             connection.close();

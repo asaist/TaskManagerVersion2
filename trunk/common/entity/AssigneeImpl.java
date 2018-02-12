@@ -61,9 +61,7 @@ public class AssigneeImpl implements Assignee, Entity {
     public boolean equals(Object anObject) {
         if (anObject instanceof AssigneeImpl) {
             AssigneeImpl assignee = (AssigneeImpl) anObject;
-                /*if (name == null || assignee.getName() == null)  {
-                    return false;
-                }*/
+
             if (!name.equals(assignee.getName())) {
                 return false;
             }

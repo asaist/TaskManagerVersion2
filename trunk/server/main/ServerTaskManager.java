@@ -27,13 +27,16 @@ public class ServerTaskManager {
         GenericDao txtFileWork = new TextDao();
         JDBCDaoAssignee jdbcDao = new JDBCDaoAssignee();
         TaskManagerModel model = new TaskManagerModelImpl(txtFileWork);
-        model.addAllAssignee();
         TaskManagerController controller = new TaskManagerControllerImpl(model);
         TaskManagerView taskManagerViewImpl = new TaskManagerViewImpl(controller, model);
-        //TaskManagerView clientDataView = new ClientDataViewImpl(controller, model);
         taskManagerViewImpl.createView();
-       // clientDataView.createView();
         model.addWatcher(taskManagerViewImpl);
+        model.addAllAssignee(jdbcDao.readAll());
+
+        //в модели updateAssignee
+
+        //TaskManagerView clientDataView = new ClientDataViewImpl(controller, model);
+       // clientDataView.createView();
        // model.addWatcher(clientDataView);
     }
 }

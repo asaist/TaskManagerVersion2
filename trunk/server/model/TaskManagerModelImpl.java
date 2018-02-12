@@ -113,13 +113,11 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         JDBCDaoAssignee dao = new JDBCDaoAssignee();
         dao.create((Entity) assignee);
         modelIsChanged();
-        System.out.println("Запись добавлена в модель " + assignee.getName());
+        System.out.println("Запись добавлена в модель " + assignee.toString());
     }
 
     @Override
-    public void addAllAssignee() {
-        JDBCDaoAssignee jdbcDaoAssignee = new JDBCDaoAssignee();
-        List<Entity> assignees1 = jdbcDaoAssignee.readAll();
+    public void addAllAssignee(List<Entity> assignees1) {
         if (assignees1 == null) {
             System.out.println("Исполнителей пока нет");
 
@@ -135,8 +133,9 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         }
     }
 
-    public void updateAssignee (Assignee assigneeToUpdate){
+    public void updateAssignee (Assignee assigneeToUpdate){ //проблема с id
         JDBCDaoAssignee dao = new JDBCDaoAssignee();
+        System.out.println(assigneeToUpdate.getId());
         dao.update((Entity) assigneeToUpdate);
         assignees.remove(searchAssignee(assigneeToUpdate));
         assignees.add(assigneeToUpdate);
@@ -152,17 +151,17 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
 
     private void checkAssignees(Assignee assignee) {
         for (Assignee assignee1 : getAssignees()) {
-            try {
-                if (!assignee1.equals(assignee)) {
-                    System.out.println("Запись корректна");
-                }
-            } catch (RuntimeException e){
-                throw new RuntimeException("a record already exists");
-            }
-            }
+            if (assignee1.equals(assignee)) {
+                throw new RuntimeException("A record already exists");
 
-
+            }
         }
+    }
+
+
+
+
+
 
 
 

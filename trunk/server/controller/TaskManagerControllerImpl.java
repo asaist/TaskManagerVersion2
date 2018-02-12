@@ -26,7 +26,7 @@ public class TaskManagerControllerImpl implements TaskManagerController {
 
     //Task
     public void addTask(String t_name, String description, String deadlineYear, String deadlineMonth, String deadlineDay, String deadlineHour, String priority, String status, String subtask) {
-        Task task = new TaskImpl();
+        Task task = new TaskImpl(t_name, description, deadlineYear, deadlineMonth, deadlineDay, deadlineHour, priority, status, subtask);
         checkFieldsTask(task);
         model.addTask(task);
     }
@@ -45,13 +45,13 @@ public class TaskManagerControllerImpl implements TaskManagerController {
 
 
         if (isCorrect(task.getTaskName())) {
-            throw new RuntimeException("t_name is not correct");
+            throw new RuntimeException("Task name is not correct");
         } else {
 
             task.setT_name(task.getTaskName().trim());
         }
         if (isCorrect(task.getDescription())) {
-            throw new RuntimeException("description is not correct");
+            throw new RuntimeException("Description is not correct");
         } else {
             task.setDescription(task.getDescription().trim());
         }
@@ -76,17 +76,17 @@ public class TaskManagerControllerImpl implements TaskManagerController {
             task.setDeadlineHour(task.getDeadlineHour().trim());
         }
         if (isCorrect(task.getPriority())) {
-            throw new RuntimeException("priority is not correct");
+            throw new RuntimeException("Priority is not correct");
         } else {
             task.setPriority(task.getPriority().trim());
         }
         if (isCorrect(task.getStatus())) {
-            throw new RuntimeException("status is not correct");
+            throw new RuntimeException("Status is not correct");
         } else {
             task.setStatus(task.getStatus().trim());
         }
         if (isCorrect(task.getSubtask())) {
-            throw new RuntimeException("subtask is not correct");
+            throw new RuntimeException("Subtask is not correct");
         } else {
             task.setSubtask(task.getSubtask().trim());
         }
@@ -115,19 +115,19 @@ public class TaskManagerControllerImpl implements TaskManagerController {
     public void checkFieldsAssignee(Assignee assignee) {
 
         if (isCorrect(assignee.getName())) {
-            throw new RuntimeException("t_name is not correct");
+            throw new RuntimeException("Name is not correct");
         } else {
             assignee.setName(assignee.getName().trim());
         }
 
         if (isCorrect(assignee.getLastname())) {
-            throw new RuntimeException("t_name is not correct");
+            throw new RuntimeException("Last name is not correct");
         } else {
             assignee.setLastname(assignee.getLastname().trim());
         }
 
         if (isCorrect(assignee.getPost())) {
-            throw new RuntimeException("t_name is not correct");
+            throw new RuntimeException("Post is not correct");
         } else {
             assignee.setPost(assignee.getPost().trim());
         }

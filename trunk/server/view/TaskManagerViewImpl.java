@@ -1,5 +1,6 @@
 package server.view;
 
+import common.entity.AssigneeImpl;
 import common.entity.TaskImpl;
 import server.controller.TaskManagerController;
 import common.entity.Assignee;
@@ -24,9 +25,8 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     private final JPanel taskControlPanel;
     private final JPanel globalPanel;
     private final JPanel tasksViewPanel;
-    private final TaskPresenter taskPresenter = new TaskPresenter();
-
-    //    private   JPanel TaskPanelButton;
+    private final JPanel assigneesViewPanel;
+    private final EntityPresenter entityPresenter = new EntityPresenter();
     private final JFrame viewFrame;
     private final JTextField viewTextName;
     private final JTextField viewTextLastName;
@@ -43,13 +43,9 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     private final JTextField viewTextSubTask;
     private final JButton addAssaigneeButton;
     private final JButton addTaskButton;
-    private final JButton deleteAssigneeButton;
-    private final JButton deleteTaskButton;
     private final String textViewFrame = "viewServer";
     private final String addAssaigneeButtonLable = "Add Assaignee";
     private final String addTaskButtonLable = "Add Task";
-    private final String deleteAssigneeButtonLable = "Delete Assignee";
-    private final String deleteTaskButtonLable = "Delete Task";
     private final String textName = "Name";
     private final String textLastName = "Last Name";
     private final String textConsole = "Console";
@@ -71,14 +67,14 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
 
         viewFrame = new JFrame(textViewFrame);
         tasksViewPanel = new JPanel();
+        assigneesViewPanel = new JPanel();
         globalPanel = new JPanel();
         assaigneeControlPanel = new JPanel();
         taskControlPanel = new JPanel();
 
         addAssaigneeButton = new JButton(addAssaigneeButtonLable);
         addTaskButton = new JButton(addTaskButtonLable);
-        deleteAssigneeButton = new JButton(deleteAssigneeButtonLable);
-        deleteTaskButton = new JButton(deleteTaskButtonLable);
+
 
         viewTextName = new JTextField(textName);
         viewTextLastName = new JTextField(textLastName);
@@ -117,16 +113,13 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         assaigneeControlPanel.add(viewTextName);
         assaigneeControlPanel.add(viewTextLastName);
         assaigneeControlPanel.add(viewTextPost);
-        assaigneeControlPanel.add(viewTextConsole);
         assaigneeControlPanel.add(addAssaigneeButton);
-        assaigneeControlPanel.add(deleteAssigneeButton);
 
         viewTextName.setSize(new Dimension(100, 100));
         viewTextLastName.setSize(new Dimension(100, 100));
         viewTextPost.setSize(new Dimension(100, 100));
         viewTextConsole.setSize(new Dimension(100, 100));
         addAssaigneeButton.setSize(new Dimension(100, 100));
-        deleteAssigneeButton.setSize(new Dimension(100, 100));
 
         taskControlPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         taskControlPanel.setSize(new Dimension(100, 100));
@@ -142,7 +135,6 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         taskControlPanel.add(viewTextStatus);
         taskControlPanel.add(viewTextSubTask);
         taskControlPanel.add(addTaskButton);
-        taskControlPanel.add(deleteTaskButton);
 
         viewTextTName.setSize(new Dimension(100, 100));
         viewTextDescription.setSize(new Dimension(100, 100));
@@ -154,11 +146,12 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         viewTextStatus.setSize(new Dimension(100, 100));
         viewTextSubTask.setSize(new Dimension(100, 100));
         addTaskButton.setSize(new Dimension(100, 100));
-        deleteTaskButton.setSize(new Dimension(100, 100));
 
         globalPanel.add(assaigneeControlPanel);
         globalPanel.add(taskControlPanel);
+        globalPanel.add(assigneesViewPanel);
         globalPanel.add(tasksViewPanel);
+        globalPanel.add(viewTextConsole);
         viewFrame.add(globalPanel);
 
 
@@ -167,10 +160,11 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
                 try {
                     controller.addAssignee(String.valueOf(viewTextName.getText()), String.valueOf(viewTextLastName.getText()), String.valueOf(viewTextPost.getText()));
                 } catch (RuntimeException e1) {
-                    System.out.println(e1);
+                    updateViewTextConsole(e1.toString());
                 }
             }
-        });
+        }
+        );
         addTaskButton.addActionListener(new ActionListener() {
                                             public void actionPerformed(ActionEvent e) {
 
@@ -184,32 +178,12 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
                                         }
         );
 
-        deleteAssigneeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    throw new RuntimeException("I do not know how to do this, but I'll soon learn");
-                } catch (RuntimeException e1) {
-                    System.out.println(e1);
-                }
-            }
-        });
-
-        deleteTaskButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-
-                    throw new RuntimeException("I do not know how to do this, but I'll soon learn");
-                } catch (RuntimeException e1) {
-                    System.out.println(e1);
-                }
-            }
-        });
         displayModels(model);
 
     }
 
 
-    public class TaskPresenter {
+    public class EntityPresenter {
 
         public void displayTask(Task task) {
             Border border = BorderFactory.createLineBorder(Color.black);
@@ -228,7 +202,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
 
             certainTaskPanel.setLayout(new GridLayout(3, 3));
             JButton removeButton = new JButton("Delete");
-            JButton updateButton = new JButton("Update");//toString = имя кнопки /вызывать task.getId
+            JButton updateButton = new JButton("Update");
             certainTaskPanel.add(taskName);
             certainTaskPanel.add(description);
             certainTaskPanel.add(deadlineYear);
@@ -244,11 +218,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
             removeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        try {
-                            controller.deleteTask(task);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+                        controller.deleteTask(task);
                     } catch (RuntimeException e1) {
                         updateViewTextConsole(e1.toString());
 
@@ -259,13 +229,9 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
             updateButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        try {
-                            Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), String.valueOf(deadlineYear.getText()), String.valueOf(deadlineMonth.getText()), String.valueOf(deadlineDay.getText()), String.valueOf(deadlineHour.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
-                            controller.updateTask(taskToUpdate);
+                        Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), String.valueOf(deadlineYear.getText()), String.valueOf(deadlineMonth.getText()), String.valueOf(deadlineDay.getText()), String.valueOf(deadlineHour.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
+                        controller.updateTask(taskToUpdate);
 
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
                     } catch (RuntimeException e1) {
                         updateViewTextConsole(e1.toString());
 
@@ -280,8 +246,56 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
 
         }
 
+        public void displayAssignee(Assignee assignee) {
+            Border border = BorderFactory.createLineBorder(Color.black);
+            JTextField assigneeName = new JTextField(assignee.getName());
+            JTextField lastName = new JTextField(assignee.getLastname());
+            JTextField post = new JTextField(assignee.getPost());
+            JPanel certainParentAssigneePanel = new JPanel();
+            JPanel certainAssigneePanel = new JPanel();
+            certainAssigneePanel.setBorder(border);
 
+            certainAssigneePanel.setLayout(new GridLayout(3, 3));
+            JButton removeButton = new JButton("Delete");
+            JButton updateButton = new JButton("Update");
+            certainAssigneePanel.add(assigneeName);
+            certainAssigneePanel.add(lastName);
+            certainAssigneePanel.add(post);
+            certainAssigneePanel.add(updateButton);
+            certainAssigneePanel.add(removeButton);
+
+            removeButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        controller.deleteAssignee(assignee);
+                    } catch (RuntimeException e1) {
+                        updateViewTextConsole(e1.toString());
+
+                    }
+                }
+            });
+
+            updateButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Assignee assigneeToUpdate = new AssigneeImpl(String.valueOf(assigneeName.getText()), String.valueOf(lastName.getText()), String.valueOf(post.getText()));
+                        controller.updateAssignee(assigneeToUpdate);
+
+                    } catch (RuntimeException e1) {
+                        updateViewTextConsole(e1.toString());
+
+                    }
+                }
+            });
+            certainParentAssigneePanel.add(certainAssigneePanel);
+            certainParentAssigneePanel.setLayout(new GridLayout(1, 3));
+
+            assigneesViewPanel.add(certainParentAssigneePanel);
+
+
+        }
     }
+
 
 
     @Override
@@ -292,20 +306,21 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
 
     public void updateViewTextConsole(String textConsole) {
         viewTextConsole.setText(textConsole);
-        System.out.println(textConsole);
     }
 
 
     public void displayModels(TaskManagerModel model) {
 
-        tasksViewPanel.removeAll();
+        assigneesViewPanel.removeAll();
         for (Assignee assignee : model.getAssignees()) {
             updateViewTextConsole(assignee.getName() + " " +
                     assignee.getLastname() + " " +
                     assignee.getPost()
             );
-
+            entityPresenter.displayAssignee(assignee);
         }
+
+        tasksViewPanel.removeAll();
         for (Task task : model.getTasks()) {
             updateViewTextConsole(task.getTaskName() + " " +
                     task.getDescription() + " " +
@@ -317,7 +332,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
                     task.getStatus() + " " +
                     task.getSubtask()
             );
-            taskPresenter.displayTask(task);
+            entityPresenter.displayTask(task);
         }
 
         viewFrame.pack();
