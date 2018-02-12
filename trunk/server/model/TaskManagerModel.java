@@ -21,7 +21,11 @@ public interface TaskManagerModel {
 
     void modelIsChanged();
 
-    void addAllAssignee(List<Entity> entities1);
+    void addAllAssignee();
+
+    void deleteAssignee(Assignee assigneeToRemove);
+
+    void updateAssignee (Assignee assigneeToUpdate);
 
     void deleteTask(Task taskToRemove);
 

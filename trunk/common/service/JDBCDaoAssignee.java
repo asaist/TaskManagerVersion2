@@ -17,23 +17,23 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
     public Integer create(Entity newInstance) {
         Connection connection = super.connectionToDatabase();
         Assignee assignee = (Assignee) newInstance;
-        String name = assignee.getName();
-        String lastName = assignee.getLastname();
-        String post = assignee.getPost();
-        Integer id = 0;
+        System.out.println(assignee.toString() + " dao");
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO ASSIGNEE(ID, NAME, LASTNAME, POST) VALUES (ASSIGNEE_SEQUENCE.nextval, '"+name+"', '"+lastName+"', '"+post+"')");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO ASSIGNEE(ID, NAME, LASTNAME, POST) VALUES (ASSIGNEE_SEQUENCE.nextval, '"+assignee.getName()+"', '"+assignee.getLastname()+"', '"+assignee.getPost()+"')");
+            statement.executeUpdate();
             System.out.println("Запись " + assignee.toString() + " добавлена в базу данных");
-            ResultSet resultSet = statement.executeQuery("select id from Assignee");
+            ResultSet resultSet = statement.executeQuery("select ID from Assignee");
+
             while (resultSet.next()){
-               id = resultSet.getInt("ID");
+               assignee.setId(resultSet.getInt("ID"));
             }
             statement.close();
             connection.close();
         } catch (SQLException e) {
 
         }
-        return id;
+        System.out.println("id " + assignee.getId());
+        return assignee.getId();
     }
 
     @Override

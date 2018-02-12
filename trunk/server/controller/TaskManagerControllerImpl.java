@@ -27,59 +27,68 @@ public class TaskManagerControllerImpl implements TaskManagerController {
     //Task
     public void addTask(String t_name, String description, String deadlineYear, String deadlineMonth, String deadlineDay, String deadlineHour, String priority, String status, String subtask) {
         Task task = new TaskImpl();
-        checkFieldstask(t_name, description, deadlineYear, deadlineMonth, deadlineDay, deadlineHour, priority, status, subtask, task);
+        checkFieldsTask(task);
         model.addTask(task);
     }
 
+    public void deleteTask(Task taskToRemove) {
+        checkFieldsTask(taskToRemove);
+        model.deleteTask(taskToRemove);
+    }
 
-    public void checkFieldstask(String t_name, String description, String deadlineYear, String deadlineMonth, String deadlineDay, String deadlineHour, String priority, String status, String subtask, Task task) {
+    public void updateTask(Task taskToUpdate) {
+        checkFieldsTask(taskToUpdate);
+        model.updateTask(taskToUpdate);
+    }
+
+    public void checkFieldsTask(Task task) {
 
 
-        if (isCorrect(t_name)) {
+        if (isCorrect(task.getTaskName())) {
             throw new RuntimeException("t_name is not correct");
         } else {
 
-            task.setT_name(t_name.trim());
+            task.setT_name(task.getTaskName().trim());
         }
-        if (isCorrect(description)) {
+        if (isCorrect(task.getDescription())) {
             throw new RuntimeException("description is not correct");
         } else {
-            task.setDescription(description.trim());
+            task.setDescription(task.getDescription().trim());
         }
-        if (isCorrectYear(deadlineYear)) {
+        if (isCorrectYear(task.getDeadlineYear())) {
             throw new RuntimeException("Year is not correct");
         } else {
-            task.setDeadlineYear(deadlineYear.trim());
+            task.setDeadlineYear(task.getDeadlineYear().trim());
         }
-        if (isCorrectMonth(deadlineMonth)) {
+        if (isCorrectMonth(task.getDeadlineMonth())) {
             throw new RuntimeException("Month is not correct");
         } else {
-            task.setDeadlineMonth(deadlineMonth.trim());
+            task.setDeadlineMonth(task.getDeadlineMonth().trim());
         }
-        if (isCorrectDay(deadlineDay)) {
+        if (isCorrectDay(task.getDeadlineDay())) {
             throw new RuntimeException("Day is not correct");
         } else {
-            task.setDeadlineDay(deadlineDay.trim());
+            task.setDeadlineDay(task.getDeadlineDay().trim());
         }
-        if (isCorrectHour(deadlineHour)) {
+        if (isCorrectHour(task.getDeadlineHour())) {
             throw new RuntimeException("Hour is not correct");
         } else {
-            task.setDeadlineHour(deadlineHour.trim());
+            task.setDeadlineHour(task.getDeadlineHour().trim());
         }
-        if (isCorrect(priority)) {
+        if (isCorrect(task.getPriority())) {
             throw new RuntimeException("priority is not correct");
         } else {
-            task.setPriority(priority.trim());
+            task.setPriority(task.getPriority().trim());
         }
-        if (isCorrect(status)) {
+        if (isCorrect(task.getStatus())) {
             throw new RuntimeException("status is not correct");
         } else {
-            task.setStatus(status.trim());
+            task.setStatus(task.getStatus().trim());
         }
-        if (isCorrect(subtask)) {
+        if (isCorrect(task.getSubtask())) {
             throw new RuntimeException("subtask is not correct");
         } else {
-            task.setSubtask(subtask.trim());
+            task.setSubtask(task.getSubtask().trim());
         }
     }
 
@@ -88,29 +97,39 @@ public class TaskManagerControllerImpl implements TaskManagerController {
     //Assaignee
     public void addAssignee(String name, String lastName, String post) {
         Assignee assignee = new AssigneeImpl(name, lastName , post);
-        checkFields(name, lastName, post, assignee);
+        checkFieldsAssignee(assignee);
         model.addAssaignee(assignee);
     }
 
+    public void deleteAssignee(Assignee assigneeToRemove) {
+        checkFieldsAssignee(assigneeToRemove);
+        model.deleteAssignee(assigneeToRemove);
+    }
 
-    public void checkFields(String name, String lastName, String post, Assignee assignee) {
+    public void updateAssignee(Assignee assigneeToUpdate) {
+        checkFieldsAssignee(assigneeToUpdate);
+        model.updateAssignee(assigneeToUpdate);
+    }
 
-        if (isCorrect(name)) {
-            throw new RuntimeException("name is empty");
+
+    public void checkFieldsAssignee(Assignee assignee) {
+
+        if (isCorrect(assignee.getName())) {
+            throw new RuntimeException("t_name is not correct");
         } else {
-            assignee.setName(name.trim());
+            assignee.setName(assignee.getName().trim());
         }
 
-        if (isCorrect(lastName)) {
-            throw new RuntimeException("lastName is empty");
+        if (isCorrect(assignee.getLastname())) {
+            throw new RuntimeException("t_name is not correct");
         } else {
-            assignee.setLastname(lastName.trim());
+            assignee.setLastname(assignee.getLastname().trim());
         }
 
-        if (isCorrect(post)) {
-            throw new RuntimeException("post is empty");
+        if (isCorrect(assignee.getPost())) {
+            throw new RuntimeException("t_name is not correct");
         } else {
-            assignee.setPost(post.trim());
+            assignee.setPost(assignee.getPost().trim());
         }
     }
 
@@ -133,14 +152,6 @@ public class TaskManagerControllerImpl implements TaskManagerController {
 
     private boolean isCorrectHour(String field) {
         return field == null || field.isEmpty() || field.trim().isEmpty() || field.indexOf(";") != -1 || Integer.parseInt(field) < 0 || Integer.parseInt(field) > 23;
-    }
-
-    public void deleteTask(Task taskToRemove) throws IOException {
-        model.deleteTask(taskToRemove);
-    }
-
-    public void updateTask(Task taskToUpdate) throws IOException {
-        model.updateTask(taskToUpdate);
     }
 
     public List<Entity> isCorrectDate(List<Entity> entitys) {

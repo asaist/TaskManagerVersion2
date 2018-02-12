@@ -92,49 +92,6 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         }
     }
 
-    //Assaignee
-    public void addAssaignee(Assignee assignee) {
-        checkAssignees(assignee);
-        assignees.add(assignee);
-        JDBCDaoAssignee jdbcDaoAssignee = new JDBCDaoAssignee();
-        jdbcDaoAssignee.create((Entity) assignee);
-        modelIsChanged();
-        System.out.println("Запись добавлена в модель " + assignee.getName());
-    }
-
-    @Override
-    public void addAllAssignee(List<Entity> entities1) {
-        if (entities1 == null) {
-            System.out.println("Исполнителей пока нет");
-
-        } else {
-
-            for (Entity entity : entities1) {
-                if (entity != null) {
-                    checkAssignees((Assignee) entity);
-                    assignees.add((Assignee) entity);
-                    modelIsChanged();
-                }
-            }
-        }
-    }
-
-    private void checkAssignees(Assignee assignee) {
-        for (Assignee assignee1 : getAssignees()) {
-            try {
-                if (!assignee1.equals(assignee)) {
-                    //System.out.println("Запись корректна");
-                }
-            } catch (RuntimeException e){
-                throw new RuntimeException("a record already exists");
-            }
-            }
-
-
-        }
-
-
-
     @Override
     public void deleteTask(Task taskToRemove) {
         dao.delete((Entity) taskToRemove);
@@ -148,6 +105,68 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         tasks.add(taskToUpdate);
         modelIsChanged();
     }
+
+    //Assaignee
+    public void addAssaignee(Assignee assignee) {
+        checkAssignees(assignee);
+        assignees.add(assignee);
+        JDBCDaoAssignee dao = new JDBCDaoAssignee();
+        dao.create((Entity) assignee);
+        modelIsChanged();
+        System.out.println("Запись добавлена в модель " + assignee.getName());
+    }
+
+    @Override
+    public void addAllAssignee() {
+        JDBCDaoAssignee jdbcDaoAssignee = new JDBCDaoAssignee();
+        List<Entity> assignees1 = jdbcDaoAssignee.readAll();
+        if (assignees1 == null) {
+            System.out.println("Исполнителей пока нет");
+
+        } else {
+
+            for (Entity entity : assignees1) {
+                if (entity != null) {
+                    checkAssignees((Assignee) entity);
+                    assignees.add((Assignee) entity);
+                    modelIsChanged();
+                }
+            }
+        }
+    }
+
+    public void updateAssignee (Assignee assigneeToUpdate){
+        JDBCDaoAssignee dao = new JDBCDaoAssignee();
+        dao.update((Entity) assigneeToUpdate);
+        assignees.remove(searchAssignee(assigneeToUpdate));
+        assignees.add(assigneeToUpdate);
+        modelIsChanged();
+    }
+
+    public void deleteAssignee(Assignee assigneeToRemove) {
+        JDBCDaoAssignee dao = new JDBCDaoAssignee();
+        dao.delete((Entity) assigneeToRemove);
+        assignees.remove(assigneeToRemove);
+        modelIsChanged();
+    }
+
+    private void checkAssignees(Assignee assignee) {
+        for (Assignee assignee1 : getAssignees()) {
+            try {
+                if (!assignee1.equals(assignee)) {
+                    System.out.println("Запись корректна");
+                }
+            } catch (RuntimeException e){
+                throw new RuntimeException("a record already exists");
+            }
+            }
+
+
+        }
+
+
+
+
 
 
     public void modelIsChanged() {
@@ -163,6 +182,16 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
             }
         }
         return foundTask;
+    }
+
+    public Assignee searchAssignee(Assignee assignee) {
+        Assignee foundAssignee = null;
+        for (Assignee assignee1 : assignees) {
+            if (assignee1.getId().equals(assignee.getId())) {
+                foundAssignee = assignee1;
+            }
+        }
+        return foundAssignee;
     }
 
 

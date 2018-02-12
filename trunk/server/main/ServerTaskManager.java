@@ -27,7 +27,7 @@ public class ServerTaskManager {
         GenericDao txtFileWork = new TextDao();
         JDBCDaoAssignee jdbcDao = new JDBCDaoAssignee();
         TaskManagerModel model = new TaskManagerModelImpl(txtFileWork);
-        model.addAllAssignee(jdbcDao.readAll());
+        model.addAllAssignee();
         TaskManagerController controller = new TaskManagerControllerImpl(model);
         TaskManagerView taskManagerViewImpl = new TaskManagerViewImpl(controller, model);
         //TaskManagerView clientDataView = new ClientDataViewImpl(controller, model);
