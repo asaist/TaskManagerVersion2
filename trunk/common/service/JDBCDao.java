@@ -62,16 +62,16 @@ public class JDBCDao implements GenericDao {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-           /* if (!connection.isClosed()) {
+            if (!connection.isClosed()) {
                 System.out.println("The connection to the database was successful");
-            }*/
+            }
 
         }
         catch (ClassNotFoundException e) {
-            System.err.println("Problems with connecting to the database");
+            System.err.println("Problems with connecting to the database " + e);
         }
         catch (SQLException e) {
-            System.err.println("Problems with connecting to the database");
+            System.err.println("Problems with connecting to the database " + e);
         }
 
         return connection;

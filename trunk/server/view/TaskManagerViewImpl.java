@@ -247,6 +247,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         }
 
         public void displayAssignee(Assignee assignee) {
+            int id = assignee.getId();
             Border border = BorderFactory.createLineBorder(Color.black);
             JTextField assigneeName = new JTextField(assignee.getName());
             JTextField lastName = new JTextField(assignee.getLastname());
@@ -278,7 +279,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
             updateButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        Assignee assigneeToUpdate = new AssigneeImpl(String.valueOf(assigneeName.getText()), String.valueOf(lastName.getText()), String.valueOf(post.getText()));
+                        Assignee assigneeToUpdate = new AssigneeImpl(id, String.valueOf(assigneeName.getText()), String.valueOf(lastName.getText()), String.valueOf(post.getText()));
                         controller.updateAssignee(assigneeToUpdate);
 
                     } catch (RuntimeException e1) {

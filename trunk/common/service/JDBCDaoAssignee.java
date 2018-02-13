@@ -115,6 +115,10 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
             catch (SQLException e) {
             System.err.println("Невозможно произвести чтение " + e);
         }
+        catch (NullPointerException e) {
+            System.err.println("Невозможно произвести чтение " + e);
+        }
+
 
 
 

@@ -17,6 +17,14 @@ public class AssigneeImpl implements Assignee, Entity {
         this.post=post;
 
     }
+
+    public AssigneeImpl(int id, String name, String lastname, String post) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.post = post;
+    }
+
     @Override
     public Integer getId() {
         return id;
