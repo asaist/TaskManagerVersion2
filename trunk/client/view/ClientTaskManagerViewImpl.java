@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.sql.Date;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -215,7 +216,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
             Border border = BorderFactory.createLineBorder(Color.black);
             JTextField taskName = new JTextField(task.getTaskName());
             JTextField description = new JTextField(task.getDescription());
-            JTextField deadline = new JTextField(String.valueOf(task.getDeadline()));
+            JTextField deadline = new JTextField(task.getDeadline().toString());
             JTextField priority = new JTextField(task.getPriority());
             JTextField status = new JTextField(task.getStatus());
             JTextField subtask = new JTextField(task.getSubtask());
@@ -254,7 +255,8 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
                 public void actionPerformed(ActionEvent e) {
                     try {
                         try {
-                            Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), String.valueOf(deadline.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
+                            Date deadlineTask = Date.valueOf(String.valueOf(deadline));
+                            Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), deadlineTask, String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
                             controller.updateTask(taskToUpdate);
 
                         } catch (IOException e1) {

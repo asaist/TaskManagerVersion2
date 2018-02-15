@@ -20,6 +20,10 @@ public class AssigneeImpl implements Assignee, Entity {
         this.post = post;
     }
 
+    public AssigneeImpl() {
+
+    }
+
     @Override
     public Integer getId() {
         return id;

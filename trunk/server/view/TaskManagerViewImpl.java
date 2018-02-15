@@ -1,10 +1,7 @@
 package server.view;
 
-import common.entity.AssigneeImpl;
-import common.entity.TaskImpl;
+import common.entity.*;
 import server.controller.TaskManagerController;
-import common.entity.Assignee;
-import common.entity.Task;
 import server.model.TaskManagerModel;
 
 import javax.swing.*;
@@ -12,8 +9,11 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.Observable;
 import java.util.Observer;
+
+import static common.entity.Task.deadline;
 
 public class TaskManagerViewImpl implements TaskManagerView, Observer {
 
@@ -33,10 +33,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     private final JTextField viewTextConsole;
     private final JTextField viewTextTName;
     private final JTextField viewTextDescription;
-    private final JTextField viewTextDeadlineYear;
-    private final JTextField viewTextDeadlineMonth;
-    private final JTextField viewTextDeadlineDay;
-    private final JTextField viewTextDeadlineHour;
+    private final JTextField viewTextDeadline;
     private final JTextField viewTextPriority;
     private final JTextField viewTextStatus;
     private final JTextField viewTextSubTask;
@@ -51,10 +48,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     private final String textPost = "Post";
     private final String texTName = "TaskName";
     private final String textDescription = "Description";
-    private final String textDeadlineYear = "2017";
-    private final String textDeadlineMonth = "12";
-    private final String textDeadlineDay = "31";
-    private final String textDeadlineHour = "23";
+    private final Date textDeadline = Date.valueOf("2017:01:02");
     private final String textPriority = "Priority";
     private final String textStatus = "Status";
     private final String textSubtasks = "Subtasks";
@@ -82,10 +76,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
 
         viewTextTName = new JTextField(texTName);
         viewTextDescription = new JTextField(textDescription);
-        viewTextDeadlineYear = new JTextField(textDeadlineYear);
-        viewTextDeadlineMonth = new JTextField(textDeadlineMonth);
-        viewTextDeadlineDay = new JTextField(textDeadlineDay);
-        viewTextDeadlineHour = new JTextField(textDeadlineHour);
+        viewTextDeadline = new JTextField(String.valueOf(textDeadline));
         viewTextPriority = new JTextField(textPriority);
         viewTextStatus = new JTextField(textStatus);
         viewTextSubTask = new JTextField(textSubtasks);
@@ -126,10 +117,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
 
         taskControlPanel.add(viewTextTName);
         taskControlPanel.add(viewTextDescription);
-        taskControlPanel.add(viewTextDeadlineYear);
-        taskControlPanel.add(viewTextDeadlineMonth);
-        taskControlPanel.add(viewTextDeadlineDay);
-        taskControlPanel.add(viewTextDeadlineHour);
+        taskControlPanel.add(viewTextDeadline);
         taskControlPanel.add(viewTextPriority);
         taskControlPanel.add(viewTextStatus);
         taskControlPanel.add(viewTextSubTask);
@@ -137,10 +125,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
 
         viewTextTName.setSize(new Dimension(100, 100));
         viewTextDescription.setSize(new Dimension(100, 100));
-        viewTextDeadlineYear.setSize(new Dimension(100, 100));
-        viewTextDeadlineMonth.setSize(new Dimension(100, 100));
-        viewTextDeadlineDay.setSize(new Dimension(100, 100));
-        viewTextDeadlineHour.setSize(new Dimension(100, 100));
+        viewTextDeadline.setSize(new Dimension(100, 100));
         viewTextPriority.setSize(new Dimension(100, 100));
         viewTextStatus.setSize(new Dimension(100, 100));
         viewTextSubTask.setSize(new Dimension(100, 100));
@@ -168,7 +153,8 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
                                             public void actionPerformed(ActionEvent e) {
 
                                                 try {
-                                                    controller.addTask(String.valueOf(viewTextTName.getText()), String.valueOf(viewTextDescription.getText()), String.valueOf(viewTextDeadlineYear.getText()), String.valueOf(viewTextDeadlineMonth.getText()), String.valueOf(viewTextDeadlineDay.getText()), String.valueOf(viewTextDeadlineHour.getText()), String.valueOf(viewTextPriority.getText()), String.valueOf(viewTextStatus.getText()), String.valueOf(viewTextSubTask.getText()));
+                                                    Date deadline = Date.valueOf(String.valueOf(viewTextDeadline.getText()));
+                                                    controller.addTask(String.valueOf(viewTextTName.getText()), String.valueOf(viewTextDescription.getText()), deadline, String.valueOf(viewTextPriority.getText()), String.valueOf(viewTextStatus.getText()), String.valueOf(viewTextSubTask.getText()));
                                                 } catch (RuntimeException e1) {
                                                     updateViewTextConsole(e1.toString());
 
@@ -188,10 +174,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
             Border border = BorderFactory.createLineBorder(Color.black);
             JTextField taskName = new JTextField(task.getTaskName());
             JTextField description = new JTextField(task.getDescription());
-            JTextField deadlineYear = new JTextField(task.getDeadlineYear());
-            JTextField deadlineMonth = new JTextField(task.getDeadlineMonth());
-            JTextField deadlineDay = new JTextField(task.getDeadlineDay());
-            JTextField deadlineHour = new JTextField(task.getDeadlineHour());
+            JTextField deadline = new JTextField(String.valueOf(task.getDeadline()));
             JTextField priority = new JTextField(task.getPriority());
             JTextField status = new JTextField(task.getStatus());
             JTextField subtask = new JTextField(task.getSubtask());
@@ -204,10 +187,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
             JButton updateButton = new JButton("Update");
             certainTaskPanel.add(taskName);
             certainTaskPanel.add(description);
-            certainTaskPanel.add(deadlineYear);
-            certainTaskPanel.add(deadlineMonth);
-            certainTaskPanel.add(deadlineDay);
-            certainTaskPanel.add(deadlineHour);
+            certainTaskPanel.add(deadline);
             certainTaskPanel.add(priority);
             certainTaskPanel.add(status);
             certainTaskPanel.add(subtask);
@@ -228,7 +208,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
             updateButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), String.valueOf(deadlineYear.getText()), String.valueOf(deadlineMonth.getText()), String.valueOf(deadlineDay.getText()), String.valueOf(deadlineHour.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
+                        Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), Date.valueOf(deadline.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
                         controller.updateTask(taskToUpdate);
 
                     } catch (RuntimeException e1) {
@@ -324,10 +304,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         for (Task task : model.getTasks()) {
             updateViewTextConsole(task.getTaskName() + " " +
                     task.getDescription() + " " +
-                    task.getDeadlineYear() + " " +
-                    task.getDeadlineMonth() + " " +
-                    task.getDeadlineDay() + " " +
-                    task.getDeadlineHour() + " " +
+                    task.getDeadline() + " " +
                     task.getPriority() + " " +
                     task.getStatus() + " " +
                     task.getSubtask()

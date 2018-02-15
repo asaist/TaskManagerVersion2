@@ -13,6 +13,10 @@ public class TaskImpl implements Task, Entity {
     private String status;
     private String subtask;
 
+    public TaskImpl() {
+
+    }
+
     @Override
     public Integer getId() {
         return id;

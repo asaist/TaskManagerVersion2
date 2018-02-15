@@ -6,10 +6,12 @@ import client.view.ClientTaskManagerViewImpl;
 import common.entity.*;
 
 import java.io.IOException;
+import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 
 public class ClientTaskManagerControllerImpl implements ClientTaskManagerController {
@@ -25,46 +27,31 @@ public class ClientTaskManagerControllerImpl implements ClientTaskManagerControl
     }
 
     //Task
-    public void addTask(String t_name, String description, String deadlineYear, String deadlineMonth, String deadlineDay, String deadlineHour, String priority, String status, String subtask) {
+    public void addTask(String taskName, String description, Date deadline, String priority, String status, String subtask) {
         Task task = new TaskImpl();
-        checkFieldstask(t_name, description, deadlineYear, deadlineMonth, deadlineDay, deadlineHour, priority, status, subtask, task);
+        checkFieldstask(taskName, description, deadline, priority, status, subtask, task);
         model.addTask(task);
     }
 
 
-    public void checkFieldstask(String t_name, String description, String deadlineYear, String deadlineMonth, String deadlineDay, String deadlineHour, String priority, String status, String subtask, Task task) {
+    public void checkFieldstask(String taskName, String description, Date deadline, String priority, String status, String subtask, Task task) {
 
 
-        if (isCorrect(t_name)) {
+        if (isCorrect(taskName)) {
             throw new RuntimeException("t_name is not correct");
         } else {
 
-            task.setTaskName(t_name.trim());
+            task.setTaskName(taskName.trim());
         }
         if (isCorrect(description)) {
             throw new RuntimeException("description is not correct");
         } else {
             task.setDescription(description.trim());
         }
-        if (isCorrectYear(deadlineYear)) {
+        if (isCorrectYear(String.valueOf(deadline))) {
             throw new RuntimeException("Year is not correct");
         } else {
-            task.setDeadlineYear(deadlineYear.trim());
-        }
-        if (isCorrectMonth(deadlineMonth)) {
-            throw new RuntimeException("Month is not correct");
-        } else {
-            task.setDeadlineMonth(deadlineMonth.trim());
-        }
-        if (isCorrectDay(deadlineDay)) {
-            throw new RuntimeException("Day is not correct");
-        } else {
-            task.setDeadlineDay(deadlineDay.trim());
-        }
-        if (isCorrectHour(deadlineHour)) {
-            throw new RuntimeException("Hour is not correct");
-        } else {
-            task.setDeadlineHour(deadlineHour.trim());
+            task.setDeadline(deadline);
         }
         if (isCorrect(priority)) {
             throw new RuntimeException("priority is not correct");
