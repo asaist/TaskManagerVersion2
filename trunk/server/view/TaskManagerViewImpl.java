@@ -12,7 +12,6 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -250,7 +249,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
             int id = assignee.getId();
             Border border = BorderFactory.createLineBorder(Color.black);
             JTextField assigneeName = new JTextField(assignee.getName());
-            JTextField lastName = new JTextField(assignee.getLastname());
+            JTextField lastName = new JTextField(assignee.getLastName());
             JTextField post = new JTextField(assignee.getPost());
             JPanel certainParentAssigneePanel = new JPanel();
             JPanel certainAssigneePanel = new JPanel();
@@ -315,7 +314,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         assigneesViewPanel.removeAll();
         for (Assignee assignee : model.getAssignees()) {
             updateViewTextConsole(assignee.getName() + " " +
-                    assignee.getLastname() + " " +
+                    assignee.getLastName() + " " +
                     assignee.getPost()
             );
             entityPresenter.displayAssignee(assignee);

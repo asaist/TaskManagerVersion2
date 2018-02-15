@@ -107,7 +107,7 @@ public class ClientDataViewImpl implements TaskManagerView {
 
                         }else if (entity instanceof Assignee){
                             Assignee assignee=(Assignee) entity;
-                            controller.addAssignee(assignee.getName(),assignee.getLastname(),assignee.getLastname());
+                            controller.addAssignee(assignee.getName(),assignee.getLastName(),assignee.getLastName());
                         }
                         break;*/
                     case "UPDATE":

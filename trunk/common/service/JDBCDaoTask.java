@@ -18,7 +18,7 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO TASK(ID, NAME, DESCRIPTION, DEADLINE, PRIORITY, STATUS) VALUES (TASK_SEQUENCE.nextval, '"+task.getTaskName()+"', '"+task.getDescription()+"')");
             statement.executeUpdate();
             System.out.println("Запись " + task.toString() + " добавлена в базу данных");
-            ResultSet resultSet = statement.executeQuery("select ID from Assignee");
+            ResultSet resultSet = statement.executeQuery("select ID from TASK");
 
             while (resultSet.next()){
                 task.setId(resultSet.getInt("ID"));
@@ -42,7 +42,7 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
                 if (id.equals(resultSet.getInt("ID"))) {
                     assignee.setId(resultSet.getInt("ID"));
                     assignee.setName(resultSet.getString("NAME"));
-                    assignee.setLastname(resultSet.getString("LASTNAME"));
+                    assignee.setLastName(resultSet.getString("LASTNAME"));
                     assignee.setPost(resultSet.getString("POST"));
                     System.out.println("Запись загружена "+ assignee.toString());
                 }
@@ -62,7 +62,7 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
         Connection connection = super.connectionToDatabase();
         Assignee assignee = (AssigneeImpl) transientObject;
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE ASSIGNEE SET NAME = '"+assignee.getName()+"', LASTNAME = '"+assignee.getLastname()+"', POST = '"+assignee.getPost()+"' WHERE ID = '"+assignee.getId()+"'");
+            PreparedStatement statement = connection.prepareStatement("UPDATE ASSIGNEE SET NAME = '"+assignee.getName()+"', LASTNAME = '"+assignee.getLastName()+"', POST = '"+assignee.getPost()+"' WHERE ID = '"+assignee.getId()+"'");
             statement.executeUpdate();
             statement.close();
             connection.close();
@@ -101,7 +101,7 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
                 Assignee assignee = new AssigneeImpl();
                 assignee.setId(resultSet.getInt("ID"));
                 assignee.setName(resultSet.getString("NAME"));
-                assignee.setLastname(resultSet.getString("LASTNAME"));
+                assignee.setLastName(resultSet.getString("LASTNAME"));
                 assignee.setPost(resultSet.getString("POST"));
                 entitys.add((Entity) assignee);
                 System.out.println("Запись " + assignee.toString() + " загружена");

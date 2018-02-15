@@ -2,26 +2,21 @@ package common.entity;
 
 public class AssigneeImpl implements Assignee, Entity {
     private int id;
-    private static int idInc;
     private String name;
-    private String lastname;
+    private String lastName;
     private String post;
 
-    public AssigneeImpl() {
-        this.id = idInc++;
-    }
-
-    public AssigneeImpl(String name, String lastname, String post){
+    public AssigneeImpl(String name, String lastName, String post){
         this.name=name;
-        this.lastname=lastname;
+        this.lastName = lastName;
         this.post=post;
 
     }
 
-    public AssigneeImpl(int id, String name, String lastname, String post) {
+    public AssigneeImpl(int id, String name, String lastName, String post) {
         this.id = id;
         this.name = name;
-        this.lastname = lastname;
+        this.lastName = lastName;
         this.post = post;
     }
 
@@ -35,14 +30,12 @@ public class AssigneeImpl implements Assignee, Entity {
         this.id = id;
     }
 
-    @Override
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    @Override
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override
@@ -73,7 +66,7 @@ public class AssigneeImpl implements Assignee, Entity {
             if (!name.equals(assignee.getName())) {
                 return false;
             }
-            if (!lastname.equals(assignee.getLastname())) {
+            if (!lastName.equals(assignee.getLastName())) {
                 return false;
             }
             if (!post.equals(assignee.getPost())) {
@@ -86,7 +79,7 @@ public class AssigneeImpl implements Assignee, Entity {
 
     @Override
     public String toString() {
-        return (name + " " + lastname + " " + post);
+        return (name + " " + lastName + " " + post);
     }
 
 

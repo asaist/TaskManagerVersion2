@@ -1,13 +1,9 @@
 package common.service;
 
-import com.sun.org.apache.bcel.internal.generic.Select;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import common.entity.Assignee;
 import common.entity.AssigneeImpl;
 import common.entity.Entity;
 
-import javax.sql.RowSet;
-import javax.sql.rowset.JdbcRowSet;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +14,7 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
         Connection connection = super.connectionToDatabase();
         Assignee assignee = (Assignee) newInstance;
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO ASSIGNEE(ID, NAME, LASTNAME, POST) VALUES (ASSIGNEE_SEQUENCE.nextval, '"+assignee.getName()+"', '"+assignee.getLastname()+"', '"+assignee.getPost()+"')");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO ASSIGNEE(ID, NAME, LASTNAME, POST) VALUES (ASSIGNEE_SEQUENCE.nextval, '"+assignee.getName()+"', '"+assignee.getLastName()+"', '"+assignee.getPost()+"')");
             statement.executeUpdate();
             System.out.println("Запись " + assignee.toString() + " добавлена в базу данных");
             ResultSet resultSet = statement.executeQuery("select ID from Assignee");
@@ -45,7 +41,7 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
                 if (id.equals(resultSet.getInt("ID"))) {
                     assignee.setId(resultSet.getInt("ID"));
                     assignee.setName(resultSet.getString("NAME"));
-                    assignee.setLastname(resultSet.getString("LASTNAME"));
+                    assignee.setLastName(resultSet.getString("LASTNAME"));
                     assignee.setPost(resultSet.getString("POST"));
                     System.out.println("Запись загружена "+ assignee.toString());
                 }
@@ -65,8 +61,9 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
         Connection connection = super.connectionToDatabase();
         Assignee assignee = (AssigneeImpl) transientObject;
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE ASSIGNEE SET NAME = '"+assignee.getName()+"', LASTNAME = '"+assignee.getLastname()+"', POST = '"+assignee.getPost()+"' WHERE ID = '"+assignee.getId()+"'");
+            PreparedStatement statement = connection.prepareStatement("UPDATE ASSIGNEE SET NAME = '"+assignee.getName()+"', LASTNAME = '"+assignee.getLastName()+"', POST = '"+assignee.getPost()+"' WHERE ID = '"+assignee.getId()+"'");
             statement.executeUpdate();
+            System.out.println("Запись " +  transientObject.toString() + " изменена ");
             statement.close();
             connection.close();
     } catch (SQLException e) {
@@ -82,6 +79,7 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM ASSIGNEE WHERE ID = '"+persistentObject.getId()+"'");
             statement.executeUpdate();
+            System.out.println("Запись " +  persistentObject.toString() + " удалена ");
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -104,11 +102,12 @@ public class JDBCDaoAssignee extends JDBCDao implements GenericDao {
                 Assignee assignee = new AssigneeImpl();
                 assignee.setId(resultSet.getInt("ID"));
                 assignee.setName(resultSet.getString("NAME"));
-                assignee.setLastname(resultSet.getString("LASTNAME"));
+                assignee.setLastName(resultSet.getString("LASTNAME"));
                 assignee.setPost(resultSet.getString("POST"));
                 entitys.add((Entity) assignee);
                 System.out.println("Запись " + assignee.toString() + " загружена");
             }
+            System.out.println("Список Assignee загружен");
             statement.close();
             connection.close();
         }

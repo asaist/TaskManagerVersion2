@@ -5,7 +5,6 @@ import server.model.TaskManagerModel;
 import server.view.TaskManagerView;
 import server.view.TaskManagerViewImpl;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,8 +24,8 @@ public class TaskManagerControllerImpl implements TaskManagerController {
     }
 
     //Task
-    public void addTask(String t_name, String description, String deadlineYear, String deadlineMonth, String deadlineDay, String deadlineHour, String priority, String status, String subtask) {
-        Task task = new TaskImpl(t_name, description, deadlineYear, deadlineMonth, deadlineDay, deadlineHour, priority, status, subtask);
+    public void addTask(String taskName, String description, Date deadline, String priority, String status, String subtask) {
+        Task task = new TaskImpl(taskName, description, deadline, priority, status, subtask);
         checkFieldsTask(task);
         model.addTask(task);
     }
@@ -48,33 +47,19 @@ public class TaskManagerControllerImpl implements TaskManagerController {
             throw new RuntimeException("Task name is not correct");
         } else {
 
-            task.setT_name(task.getTaskName().trim());
+            task.setTaskName(task.getTaskName().trim());
         }
         if (isCorrect(task.getDescription())) {
             throw new RuntimeException("Description is not correct");
         } else {
             task.setDescription(task.getDescription().trim());
         }
-        if (isCorrectYear(task.getDeadlineYear())) {
+        if (isCorrectYear(String.valueOf(task.getDeadline()))) {
             throw new RuntimeException("Year is not correct");
         } else {
-            task.setDeadlineYear(task.getDeadlineYear().trim());
+            task.setDeadline(task.getDeadline());
         }
-        if (isCorrectMonth(task.getDeadlineMonth())) {
-            throw new RuntimeException("Month is not correct");
-        } else {
-            task.setDeadlineMonth(task.getDeadlineMonth().trim());
-        }
-        if (isCorrectDay(task.getDeadlineDay())) {
-            throw new RuntimeException("Day is not correct");
-        } else {
-            task.setDeadlineDay(task.getDeadlineDay().trim());
-        }
-        if (isCorrectHour(task.getDeadlineHour())) {
-            throw new RuntimeException("Hour is not correct");
-        } else {
-            task.setDeadlineHour(task.getDeadlineHour().trim());
-        }
+
         if (isCorrect(task.getPriority())) {
             throw new RuntimeException("Priority is not correct");
         } else {
@@ -120,10 +105,10 @@ public class TaskManagerControllerImpl implements TaskManagerController {
             assignee.setName(assignee.getName().trim());
         }
 
-        if (isCorrect(assignee.getLastname())) {
+        if (isCorrect(assignee.getLastName())) {
             throw new RuntimeException("Last name is not correct");
         } else {
-            assignee.setLastname(assignee.getLastname().trim());
+            assignee.setLastName(assignee.getLastName().trim());
         }
 
         if (isCorrect(assignee.getPost())) {
@@ -165,13 +150,9 @@ public class TaskManagerControllerImpl implements TaskManagerController {
 
             for (Entity entity : entitys) {
                 Task task = (Task) entity;
-                try {
-                    Date taskTime = format.parse(task.getDeadlineYear() + "." + task.getDeadlineMonth() + "." + task.getDeadlineDay() + "." + task.getDeadlineHour());
-                    if (taskTime.after(localDate)) {
-                        isCorrectTasks.add(entity);
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                Date taskTime = task.getDeadline();
+                if (taskTime.after(localDate)) {
+                    isCorrectTasks.add(entity);
                 }
 
             }

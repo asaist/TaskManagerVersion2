@@ -5,7 +5,6 @@ import client.model.ClientTaskManagerModel;
 import common.entity.TaskImpl;
 import common.entity.Assignee;
 import common.entity.Task;
-import server.model.TaskManagerModel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -216,10 +215,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
             Border border = BorderFactory.createLineBorder(Color.black);
             JTextField taskName = new JTextField(task.getTaskName());
             JTextField description = new JTextField(task.getDescription());
-            JTextField deadlineYear = new JTextField(task.getDeadlineYear());
-            JTextField deadlineMonth = new JTextField(task.getDeadlineMonth());
-            JTextField deadlineDay = new JTextField(task.getDeadlineDay());
-            JTextField deadlineHour = new JTextField(task.getDeadlineHour());
+            JTextField deadline = new JTextField(String.valueOf(task.getDeadline()));
             JTextField priority = new JTextField(task.getPriority());
             JTextField status = new JTextField(task.getStatus());
             JTextField subtask = new JTextField(task.getSubtask());
@@ -232,10 +228,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
             JButton updateButton = new JButton("Update");//toString = имя кнопки /вызывать task.getId
             certainTaskPanel.add(taskName);
             certainTaskPanel.add(description);
-            certainTaskPanel.add(deadlineYear);
-            certainTaskPanel.add(deadlineMonth);
-            certainTaskPanel.add(deadlineDay);
-            certainTaskPanel.add(deadlineHour);
+            certainTaskPanel.add(deadline);
             certainTaskPanel.add(priority);
             certainTaskPanel.add(status);
             certainTaskPanel.add(subtask);
@@ -261,7 +254,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
                 public void actionPerformed(ActionEvent e) {
                     try {
                         try {
-                            Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), String.valueOf(deadlineYear.getText()), String.valueOf(deadlineMonth.getText()), String.valueOf(deadlineDay.getText()), String.valueOf(deadlineHour.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
+                            Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), String.valueOf(deadline.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
                             controller.updateTask(taskToUpdate);
 
                         } catch (IOException e1) {
@@ -300,7 +293,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
         tasksViewPanel.removeAll();
         for (Assignee assignee : model.getAssignees()) {
             updateViewTextConsole(assignee.getName() + " " +
-                    assignee.getLastname() + " " +
+                    assignee.getLastName() + " " +
                     assignee.getPost()
             );
 
@@ -308,10 +301,6 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
         for (Task task : model.getTasks()) {
             updateViewTextConsole(task.getTaskName() + " " +
                     task.getDescription() + " " +
-                    task.getDeadlineYear() + " " +
-                    task.getDeadlineMonth() + " " +
-                    task.getDeadlineDay() + " " +
-                    task.getDeadlineHour() + " " +
                     task.getPriority() + " " +
                     task.getStatus() + " " +
                     task.getSubtask()

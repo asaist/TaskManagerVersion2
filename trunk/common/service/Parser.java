@@ -5,8 +5,6 @@ import common.entity.Task;
 import common.entity.TaskImpl;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Parser {
 
@@ -18,7 +16,7 @@ public class Parser {
         String[] fields = line.split(";");
         // if ((fields.length == 10)) {
         task.setId(Integer.parseInt(fields[0]));
-        task.setT_name(fields[1]);
+        task.setTaskName(fields[1]);
         task.setDescription(fields[2]);
         task.setDeadlineYear(fields[3]);
         task.setDeadlineMonth(fields[4]);

@@ -5,6 +5,7 @@ import common.entity.Entity;
 import common.entity.Task;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 public interface TaskManagerController {
@@ -14,7 +15,7 @@ public interface TaskManagerController {
 
     void updateAssignee(Assignee assigneeToUpdate);
 
-    void addTask(String t_name, String description, String deadlineYear, String deadlineMonth, String deadlineDay, String deadlineHour, String priority, String status, String subtask);
+    void addTask(String taskName, String description, Date deadline, String priority, String status, String subtask);
 
     void deleteTask(Task task);
 

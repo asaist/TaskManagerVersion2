@@ -14,9 +14,9 @@ public interface Assignee {
 
     String getName();
 
-    void setLastname(String lastNmae);
+    void setLastName(String lastNmae);
 
-    String getLastname();
+    String getLastName();
 
     void setPost(String post);
 

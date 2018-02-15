@@ -39,7 +39,7 @@ public class ClientTaskManagerControllerImpl implements ClientTaskManagerControl
             throw new RuntimeException("t_name is not correct");
         } else {
 
-            task.setT_name(t_name.trim());
+            task.setTaskName(t_name.trim());
         }
         if (isCorrect(description)) {
             throw new RuntimeException("description is not correct");
@@ -105,7 +105,7 @@ public class ClientTaskManagerControllerImpl implements ClientTaskManagerControl
         if (isCorrect(lastName)) {
             throw new RuntimeException("lastName is empty");
         } else {
-            assignee.setLastname(lastName.trim());
+            assignee.setLastName(lastName.trim());
         }
 
         if (isCorrect(post)) {

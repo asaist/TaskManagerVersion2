@@ -3,14 +3,10 @@ package common.entity;
 import java.util.Date;
 
 public interface Task {
-    int id = 0;
+    Integer id = 0;
     String t_name = null;
     String description = null;
     Date deadline = null;
-    String deadlineYear = null;
-    String deadlineMonth = null;
-    String deadlineDay = null;
-    String deadlineHour = null;
     String priority = null;
     String status = null;
     String subtask = null;
@@ -19,7 +15,7 @@ public interface Task {
 
     Integer getId();
 
-    void setT_name(String t_name);
+    void setTaskName(String taskName);
 
     String getTaskName();
 
@@ -27,21 +23,9 @@ public interface Task {
 
     String getDescription();
 
-    void setDeadlineYear(String deadlineYear);
+    void setDeadline(Date deadline);
 
-    String getDeadlineYear();
-
-    void setDeadlineMonth(String deadlineMonth);
-
-    String getDeadlineMonth();
-
-    void setDeadlineDay(String deadlineDay);
-
-    String getDeadlineDay();
-
-    void setDeadlineHour(String deadlineHour);
-
-    String getDeadlineHour();
+    Date getDeadline();
 
     void setPriority(String priority);
 
