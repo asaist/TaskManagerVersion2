@@ -8,13 +8,21 @@ public class TaskImpl implements Task, Entity {
     private static int idInc;
     private String taskName;
     private String description;
-    private Date deadline;
+    private String deadline;
     private String priority;
     private String status;
-    private String subtask;
 
     public TaskImpl() {
 
+    }
+
+    public TaskImpl(int id, String taskName, String description, String deadline, String priority, String status) {
+        this.id = id;
+        this.taskName = taskName;
+        this.description = description;
+        this.deadline = deadline;
+        this.priority = priority;
+        this.status = status;
     }
 
     @Override
@@ -56,12 +64,12 @@ public class TaskImpl implements Task, Entity {
     }
 
     @Override
-    public Date getDeadline() {
+    public String getDeadline() {
         return deadline;
     }
 
     @Override
-    public void setDeadline(Date deadline) {
+    public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 
@@ -85,27 +93,14 @@ public class TaskImpl implements Task, Entity {
         this.status = status;
     }
 
-    @Override
-    public String getSubtask() {
-        return subtask;
-    }
-
-    @Override
-    public void setSubtask(String subtask) {
-        this.subtask = subtask;
-    }
 
 
-
-
-
-    public TaskImpl(String taskName, String description, Date deadline, String priority, String status, String subtask) {
+    public TaskImpl(String taskName, String description, String deadline, String priority, String status) {
         this.taskName = taskName;
         this.description = description;
         this.deadline = deadline;
         this.priority = priority;
         this.status = status;
-        this.subtask = subtask;
     }
 
 
@@ -129,16 +124,13 @@ public class TaskImpl implements Task, Entity {
             if (!status.equals(task.getStatus())) {
                 return false;
             }
-            if (!subtask.equals(task.getSubtask())) {
-                return false;
-            }
         }
         return true;
     }
 
     @Override
     public String toString() {
-        return (taskName + " " + description + " " + deadline.getYear() + " " + deadline.getMonth() + " " + deadline.getDay() + " " + deadline.getHours() + " " + priority + " " + status + " " + subtask);
+        return (taskName + " " + description + " " + deadline + " " + priority + " " + status);
 
     }
 

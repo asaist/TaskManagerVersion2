@@ -27,14 +27,14 @@ public class ClientTaskManagerControllerImpl implements ClientTaskManagerControl
     }
 
     //Task
-    public void addTask(String taskName, String description, Date deadline, String priority, String status, String subtask) {
+    public void addTask(String taskName, String description, String deadline, String priority, String status, String subtask) {
         Task task = new TaskImpl();
         checkFieldstask(taskName, description, deadline, priority, status, subtask, task);
         model.addTask(task);
     }
 
 
-    public void checkFieldstask(String taskName, String description, Date deadline, String priority, String status, String subtask, Task task) {
+    public void checkFieldstask(String taskName, String description, String deadline, String priority, String status, String subtask, Task task) {
 
 
         if (isCorrect(taskName)) {
@@ -49,7 +49,7 @@ public class ClientTaskManagerControllerImpl implements ClientTaskManagerControl
             task.setDescription(description.trim());
         }
         if (isCorrectYear(String.valueOf(deadline))) {
-            throw new RuntimeException("Year is not correct");
+            throw new RuntimeException("deadline is not correct");
         } else {
             task.setDeadline(deadline);
         }
@@ -62,11 +62,6 @@ public class ClientTaskManagerControllerImpl implements ClientTaskManagerControl
             throw new RuntimeException("status is not correct");
         } else {
             task.setStatus(status.trim());
-        }
-        if (isCorrect(subtask)) {
-            throw new RuntimeException("subtask is not correct");
-        } else {
-            task.setSubtask(subtask.trim());
         }
     }
 
@@ -123,38 +118,26 @@ public class ClientTaskManagerControllerImpl implements ClientTaskManagerControl
         return field == null || field.isEmpty() || field.trim().isEmpty() || field.indexOf(";") != -1 || Integer.parseInt(field) < 0 || Integer.parseInt(field) > 23;
     }
 
-    public void deleteTask(Task taskToRemove) throws IOException {
+    public void deleteTask(Task taskToRemove) {
         model.deleteTask(taskToRemove);
     }
 
-    public void updateTask(Task taskToUpdate) throws IOException {
+    public void updateTask(Task taskToUpdate) {
         model.updateTask(taskToUpdate);
     }
 
-    public List<Entity> isCorrectDate(List<Entity> entitys) {
-        List<Entity> isCorrectTasks = new ArrayList<>();
-        if (entitys == null) {
-            System.out.println("Задач пока нет");
-        } else {
+    public Date stringToDateTask(String taskDeadline) {
 
             DateFormat format = new SimpleDateFormat("YYYY.MM.DD.HH");
-            Date localDate = new Date();
-
-            for (Entity entity : entitys) {
-                Task task = (Task) entity;
-                try {
-                    Date taskTime = format.parse(task.getDeadlineYear() + "." + task.getDeadlineMonth() + "." + task.getDeadlineDay() + "." + task.getDeadlineHour());
-                    if (taskTime.after(localDate)) {
-                        isCorrectTasks.add(entity);
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
+        Date taskTime = null;
+        try {
+            taskTime = format.parse(taskDeadline);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        return isCorrectTasks;
+
+
+        return taskTime;
     }
 }
 

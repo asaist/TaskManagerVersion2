@@ -1,9 +1,6 @@
 package common.service;
 
-import common.entity.Assignee;
-import common.entity.AssigneeImpl;
-import common.entity.Entity;
-import common.entity.Task;
+import common.entity.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,7 +12,7 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
         Connection connection = super.connectionToDatabase();
         Task task = (Task) newInstance;
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO TASK(ID, NAME, DESCRIPTION, DEADLINE, PRIORITY, STATUS) VALUES (TASK_SEQUENCE.nextval, '"+task.getTaskName()+"', '"+task.getDescription()+"')");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO TASK(ID, NAME, DESCRIPTION, DEADLINE, PRIORITY, STATUS) VALUES (TASK_SEQUENCE.nextval, '"+task.getTaskName()+"',  '"+task.getDescription()+"', '"+task.getDeadline()+"', '"+task.getPriority()+"', '"+task.getStatus()+"')");
             statement.executeUpdate();
             System.out.println("Запись " + task.toString() + " добавлена в базу данных");
             ResultSet resultSet = statement.executeQuery("select ID from TASK");
@@ -33,18 +30,20 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
 
     @Override
     public Entity read(Integer id) {
-        Assignee assignee = new AssigneeImpl();
+        Task task = new TaskImpl();
         Connection connection = super.connectionToDatabase();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select id, name, lastname, post from Assignee");
+            ResultSet resultSet = statement.executeQuery("select id, name, description, deadline, priority, status from Task");
             while (resultSet.next()){
                 if (id.equals(resultSet.getInt("ID"))) {
-                    assignee.setId(resultSet.getInt("ID"));
-                    assignee.setName(resultSet.getString("NAME"));
-                    assignee.setLastName(resultSet.getString("LASTNAME"));
-                    assignee.setPost(resultSet.getString("POST"));
-                    System.out.println("Запись загружена "+ assignee.toString());
+                    task.setId(resultSet.getInt("ID"));
+                    task.setTaskName(resultSet.getString("NAME"));
+                    task.setDescription(resultSet.getString("DESCRIPTION"));
+                    task.setDeadline(resultSet.getString("DEADLINE"));
+                    task.setPriority(resultSet.getString("PRIORITY"));
+                    task.setStatus(resultSet.getString("STATUS"));
+                    System.out.println("Запись загружена "+ task.toString());
                 }
             }
 
@@ -54,15 +53,15 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
             System.err.println("Невозможно произвести чтение " + e);
         }
 
-        return (Entity) assignee;
+        return (Entity) task;
     }
 
     @Override
     public void update(Entity transientObject) {
         Connection connection = super.connectionToDatabase();
-        Assignee assignee = (AssigneeImpl) transientObject;
+        Task task = (TaskImpl) transientObject;
         try {
-            PreparedStatement statement = connection.prepareStatement("UPDATE ASSIGNEE SET NAME = '"+assignee.getName()+"', LASTNAME = '"+assignee.getLastName()+"', POST = '"+assignee.getPost()+"' WHERE ID = '"+assignee.getId()+"'");
+            PreparedStatement statement = connection.prepareStatement("UPDATE TASK SET NAME = '"+task.getTaskName()+"', DESCRIPTION = '"+task.getDescription()+"', DEADLINE = '"+task.getDeadline()+"', PRIORITY = '"+task.getPriority()+"', STATUS = '"+task.getStatus()+"' WHERE ID = '"+task.getId()+"'");
             statement.executeUpdate();
             statement.close();
             connection.close();
@@ -77,7 +76,7 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
     public void delete(Entity persistentObject) {
         Connection connection = super.connectionToDatabase();
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM ASSIGNEE WHERE ID = '"+persistentObject.getId()+"'");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM Task WHERE ID = '"+persistentObject.getId()+"'");
             statement.executeUpdate();
             statement.close();
             connection.close();
@@ -96,16 +95,20 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
         Connection connection = super.connectionToDatabase();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select id, name, lastname, post from Assignee");
+            ResultSet resultSet = statement.executeQuery("select id, name, description, deadline, priority, status from Task");
             while (resultSet.next()) {
-                Assignee assignee = new AssigneeImpl();
-                assignee.setId(resultSet.getInt("ID"));
-                assignee.setName(resultSet.getString("NAME"));
-                assignee.setLastName(resultSet.getString("LASTNAME"));
-                assignee.setPost(resultSet.getString("POST"));
-                entitys.add((Entity) assignee);
-                System.out.println("Запись " + assignee.toString() + " загружена");
+
+                Task task = new TaskImpl();
+                task.setId(resultSet.getInt("ID"));
+                task.setTaskName(resultSet.getString("NAME"));
+                task.setDescription(resultSet.getString("DESCRIPTION"));
+                task.setDeadline(resultSet.getString("DEADLINE"));
+                task.setPriority(resultSet.getString("PRIORITY"));
+                task.setStatus(resultSet.getString("STATUS"));
+                entitys.add((Entity) task);
+                System.out.println("Запись " + task.toString() + " загружена");
             }
+            System.out.println("Список Task загружен ");
             statement.close();
             connection.close();
         }
@@ -115,15 +118,12 @@ public class JDBCDaoTask extends JDBCDao implements GenericDao {
         catch (NullPointerException e) {
             System.err.println("Невозможно произвести чтение " + e);
         }
-
-
-
-
         return entitys;
+
     }
 
     @Override
     public void checkFile() {
-        //elfkbnm
+
     }
 }

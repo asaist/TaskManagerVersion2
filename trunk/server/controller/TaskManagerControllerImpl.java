@@ -6,9 +6,11 @@ import server.view.TaskManagerView;
 import server.view.TaskManagerViewImpl;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.Date;
 
 
 public class TaskManagerControllerImpl implements TaskManagerController {
@@ -24,8 +26,8 @@ public class TaskManagerControllerImpl implements TaskManagerController {
     }
 
     //Task
-    public void addTask(String taskName, String description, Date deadline, String priority, String status, String subtask) {
-        Task task = new TaskImpl(taskName, description, deadline, priority, status, subtask);
+    public void addTask(String taskName, String description, String deadline, String priority, String status) {
+        Task task = new TaskImpl(taskName, description, deadline, priority, status);
         checkFieldsTask(task);
         model.addTask(task);
     }
@@ -46,7 +48,6 @@ public class TaskManagerControllerImpl implements TaskManagerController {
         if (isCorrect(task.getTaskName())) {
             throw new RuntimeException("Task name is not correct");
         } else {
-
             task.setTaskName(task.getTaskName().trim());
         }
         if (isCorrect(task.getDescription())) {
@@ -54,7 +55,7 @@ public class TaskManagerControllerImpl implements TaskManagerController {
         } else {
             task.setDescription(task.getDescription().trim());
         }
-        if (isCorrectYear(String.valueOf(task.getDeadline()))) {
+        if (isCorrect(String.valueOf(task.getDeadline()))) {
             throw new RuntimeException("Year is not correct");
         } else {
             task.setDeadline(task.getDeadline());
@@ -69,11 +70,6 @@ public class TaskManagerControllerImpl implements TaskManagerController {
             throw new RuntimeException("Status is not correct");
         } else {
             task.setStatus(task.getStatus().trim());
-        }
-        if (isCorrect(task.getSubtask())) {
-            throw new RuntimeException("Subtask is not correct");
-        } else {
-            task.setSubtask(task.getSubtask().trim());
         }
     }
 
@@ -122,44 +118,14 @@ public class TaskManagerControllerImpl implements TaskManagerController {
         return field == null || field.isEmpty() || field.trim().isEmpty() || field.indexOf(";") != -1;
     }
 
-    private boolean isCorrectYear(String field) {
-        Calendar calendar = new GregorianCalendar();
-        return field == null || field.isEmpty() || field.trim().isEmpty() || field.indexOf(";") != -1 || Integer.parseInt(field) > calendar.get(Calendar.YEAR) + 3;
+    public LocalDateTime stringToDateTask(String taskDeadline) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime formatDateTime = LocalDateTime.parse(taskDeadline, formatter);
+
+        return formatDateTime;
     }
 
-    private boolean isCorrectMonth(String field) {
-        return field == null || field.isEmpty() || field.trim().isEmpty() || field.indexOf(";") != -1 || Integer.parseInt(field) < 1 || Integer.parseInt(field) > 12;
-    }
-
-    private boolean isCorrectDay(String field) {
-        return field == null || field.isEmpty() || field.trim().isEmpty() || field.indexOf(";") != -1 || Integer.parseInt(field) < 1 || Integer.parseInt(field) > 31;
-    }
-
-    private boolean isCorrectHour(String field) {
-        return field == null || field.isEmpty() || field.trim().isEmpty() || field.indexOf(";") != -1 || Integer.parseInt(field) < 0 || Integer.parseInt(field) > 23;
-    }
-
-    public List<Entity> isCorrectDate(List<Entity> entitys) {
-        List<Entity> isCorrectTasks = new ArrayList<>();
-        if (entitys == null) {
-            System.out.println("Задач пока нет");
-        } else {
-
-            DateFormat format = new SimpleDateFormat("YYYY.MM.DD.HH");
-            Date localDate = new Date();
-
-            for (Entity entity : entitys) {
-                Task task = (Task) entity;
-                Date taskTime = task.getDeadline();
-                if (taskTime.after(localDate)) {
-                    isCorrectTasks.add(entity);
-                }
-
-            }
-
-        }
-        return isCorrectTasks;
-    }
 }
 
 

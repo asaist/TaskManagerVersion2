@@ -2,6 +2,7 @@ package server.view;
 
 import common.entity.*;
 import server.controller.TaskManagerController;
+import server.controller.TaskManagerControllerImpl;
 import server.model.TaskManagerModel;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     private final TaskManagerController controller;
     private final TaskManagerModel model;
 
+
     private final JPanel assaigneeControlPanel;
     private final JPanel taskControlPanel;
     private final JPanel globalPanel;
@@ -36,7 +38,6 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     private final JTextField viewTextDeadline;
     private final JTextField viewTextPriority;
     private final JTextField viewTextStatus;
-    private final JTextField viewTextSubTask;
     private final JButton addAssaigneeButton;
     private final JButton addTaskButton;
     private final String textViewFrame = "viewServer";
@@ -48,15 +49,15 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     private final String textPost = "Post";
     private final String texTName = "TaskName";
     private final String textDescription = "Description";
-    private final Date textDeadline = Date.valueOf("2017:01:02");
+    private final String textDeadline = "2016-11-09 10:30";
     private final String textPriority = "Priority";
     private final String textStatus = "Status";
-    private final String textSubtasks = "Subtasks";
 
 
     public TaskManagerViewImpl(TaskManagerController controller, TaskManagerModel model) {
         this.controller = controller;
         this.model = model;
+
 
         viewFrame = new JFrame(textViewFrame);
         tasksViewPanel = new JPanel();
@@ -68,7 +69,6 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         addAssaigneeButton = new JButton(addAssaigneeButtonLable);
         addTaskButton = new JButton(addTaskButtonLable);
 
-
         viewTextName = new JTextField(textName);
         viewTextLastName = new JTextField(textLastName);
         viewTextPost = new JTextField(textPost);
@@ -79,7 +79,6 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         viewTextDeadline = new JTextField(String.valueOf(textDeadline));
         viewTextPriority = new JTextField(textPriority);
         viewTextStatus = new JTextField(textStatus);
-        viewTextSubTask = new JTextField(textSubtasks);
     }
 
     public void createView() {
@@ -120,7 +119,6 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         taskControlPanel.add(viewTextDeadline);
         taskControlPanel.add(viewTextPriority);
         taskControlPanel.add(viewTextStatus);
-        taskControlPanel.add(viewTextSubTask);
         taskControlPanel.add(addTaskButton);
 
         viewTextTName.setSize(new Dimension(100, 100));
@@ -128,7 +126,6 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         viewTextDeadline.setSize(new Dimension(100, 100));
         viewTextPriority.setSize(new Dimension(100, 100));
         viewTextStatus.setSize(new Dimension(100, 100));
-        viewTextSubTask.setSize(new Dimension(100, 100));
         addTaskButton.setSize(new Dimension(100, 100));
 
         globalPanel.add(assaigneeControlPanel);
@@ -150,17 +147,16 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         }
         );
         addTaskButton.addActionListener(new ActionListener() {
-                                            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
 
-                                                try {
-                                                    Date deadline = Date.valueOf(String.valueOf(viewTextDeadline.getText()));
-                                                    controller.addTask(String.valueOf(viewTextTName.getText()), String.valueOf(viewTextDescription.getText()), deadline, String.valueOf(viewTextPriority.getText()), String.valueOf(viewTextStatus.getText()), String.valueOf(viewTextSubTask.getText()));
-                                                } catch (RuntimeException e1) {
-                                                    updateViewTextConsole(e1.toString());
+                try {
+                    controller.addTask(String.valueOf(viewTextTName.getText()), String.valueOf(viewTextDescription.getText()), String.valueOf(viewTextDeadline.getText()), String.valueOf(viewTextPriority.getText()), String.valueOf(viewTextStatus.getText()));
+                } catch (RuntimeException e1) {
+                    updateViewTextConsole(e1.toString());
 
-                                                }
-                                            }
-                                        }
+                }
+            }
+        }
         );
 
         displayModels(model);
@@ -171,13 +167,13 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     public class EntityPresenter {
 
         public void displayTask(Task task) {
+            int id = task.getId();
             Border border = BorderFactory.createLineBorder(Color.black);
             JTextField taskName = new JTextField(task.getTaskName());
             JTextField description = new JTextField(task.getDescription());
             JTextField deadline = new JTextField(String.valueOf(task.getDeadline()));
             JTextField priority = new JTextField(task.getPriority());
             JTextField status = new JTextField(task.getStatus());
-            JTextField subtask = new JTextField(task.getSubtask());
             JPanel certainParentTaskPanel = new JPanel();
             JPanel certainTaskPanel = new JPanel();
             certainTaskPanel.setBorder(border);
@@ -190,7 +186,6 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
             certainTaskPanel.add(deadline);
             certainTaskPanel.add(priority);
             certainTaskPanel.add(status);
-            certainTaskPanel.add(subtask);
             certainTaskPanel.add(updateButton);
             certainTaskPanel.add(removeButton);
 
@@ -208,7 +203,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
             updateButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), Date.valueOf(deadline.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
+                        Task taskToUpdate = new TaskImpl(id, String.valueOf(taskName.getText()), String.valueOf(description.getText()), String.valueOf(deadline.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()));
                         controller.updateTask(taskToUpdate);
 
                     } catch (RuntimeException e1) {
@@ -306,8 +301,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
                     task.getDescription() + " " +
                     task.getDeadline() + " " +
                     task.getPriority() + " " +
-                    task.getStatus() + " " +
-                    task.getSubtask()
+                    task.getStatus()
             );
             entityPresenter.displayTask(task);
         }

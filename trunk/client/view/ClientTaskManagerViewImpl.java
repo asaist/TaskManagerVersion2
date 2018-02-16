@@ -35,10 +35,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
     private final JTextField viewTextConsole;
     private final JTextField viewTextTName;
     private final JTextField viewTextDescription;
-    private final JTextField viewTextDeadlineYear;
-    private final JTextField viewTextDeadlineMonth;
-    private final JTextField viewTextDeadlineDay;
-    private final JTextField viewTextDeadlineHour;
+    private final JTextField viewTextDeadline;
     private final JTextField viewTextPriority;
     private final JTextField viewTextStatus;
     private final JTextField viewTextSubTask;
@@ -57,10 +54,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
     private final String textPost = "Post";
     private final String texTName = "TaskName";
     private final String textDescription = "Description";
-    private final String textDeadlineYear = "2017";
-    private final String textDeadlineMonth = "12";
-    private final String textDeadlineDay = "31";
-    private final String textDeadlineHour = "23";
+    private final String textDeadline = "2017:01:02";
     private final String textPriority = "Priority";
     private final String textStatus = "Status";
     private final String textSubtasks = "Subtasks";
@@ -88,10 +82,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
 
         viewTextTName = new JTextField(texTName);
         viewTextDescription = new JTextField(textDescription);
-        viewTextDeadlineYear = new JTextField(textDeadlineYear);
-        viewTextDeadlineMonth = new JTextField(textDeadlineMonth);
-        viewTextDeadlineDay = new JTextField(textDeadlineDay);
-        viewTextDeadlineHour = new JTextField(textDeadlineHour);
+        viewTextDeadline = new JTextField(textDeadline);
         viewTextPriority = new JTextField(textPriority);
         viewTextStatus = new JTextField(textStatus);
         viewTextSubTask = new JTextField(textSubtasks);
@@ -135,10 +126,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
 
         taskControlPanel.add(viewTextTName);
         taskControlPanel.add(viewTextDescription);
-        taskControlPanel.add(viewTextDeadlineYear);
-        taskControlPanel.add(viewTextDeadlineMonth);
-        taskControlPanel.add(viewTextDeadlineDay);
-        taskControlPanel.add(viewTextDeadlineHour);
+        taskControlPanel.add(viewTextDeadline);
         taskControlPanel.add(viewTextPriority);
         taskControlPanel.add(viewTextStatus);
         taskControlPanel.add(viewTextSubTask);
@@ -147,10 +135,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
 
         viewTextTName.setSize(new Dimension(100, 100));
         viewTextDescription.setSize(new Dimension(100, 100));
-        viewTextDeadlineYear.setSize(new Dimension(100, 100));
-        viewTextDeadlineMonth.setSize(new Dimension(100, 100));
-        viewTextDeadlineDay.setSize(new Dimension(100, 100));
-        viewTextDeadlineHour.setSize(new Dimension(100, 100));
+        viewTextDeadline.setSize(new Dimension(100, 100));
         viewTextPriority.setSize(new Dimension(100, 100));
         viewTextStatus.setSize(new Dimension(100, 100));
         viewTextSubTask.setSize(new Dimension(100, 100));
@@ -175,8 +160,9 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
         addTaskButton.addActionListener(new ActionListener() {
                                             public void actionPerformed(ActionEvent e) {
 
+
                                                 try {
-                                                    controller.addTask(String.valueOf(viewTextTName.getText()), String.valueOf(viewTextDescription.getText()), String.valueOf(viewTextDeadlineYear.getText()), String.valueOf(viewTextDeadlineMonth.getText()), String.valueOf(viewTextDeadlineDay.getText()), String.valueOf(viewTextDeadlineHour.getText()), String.valueOf(viewTextPriority.getText()), String.valueOf(viewTextStatus.getText()), String.valueOf(viewTextSubTask.getText()));
+                                                    controller.addTask(String.valueOf(viewTextTName.getText()), String.valueOf(viewTextDescription.getText()), (String.valueOf(viewTextDeadline.getText())), String.valueOf(viewTextPriority.getText()), String.valueOf(viewTextStatus.getText()), String.valueOf(viewTextSubTask.getText()));
                                                 } catch (RuntimeException e1) {
                                                     updateViewTextConsole(e1.toString());
 
@@ -219,7 +205,6 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
             JTextField deadline = new JTextField(task.getDeadline().toString());
             JTextField priority = new JTextField(task.getPriority());
             JTextField status = new JTextField(task.getStatus());
-            JTextField subtask = new JTextField(task.getSubtask());
             JPanel certainParentTaskPanel = new JPanel();
             JPanel certainTaskPanel = new JPanel();
             certainTaskPanel.setBorder(border);
@@ -232,18 +217,13 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
             certainTaskPanel.add(deadline);
             certainTaskPanel.add(priority);
             certainTaskPanel.add(status);
-            certainTaskPanel.add(subtask);
             certainTaskPanel.add(updateButton);
             certainTaskPanel.add(removeButton);
 
             removeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        try {
-                            controller.deleteTask(task);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+                        controller.deleteTask(task);
                     } catch (RuntimeException e1) {
                         updateViewTextConsole(e1.toString());
 
@@ -254,14 +234,9 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
             updateButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        try {
-                            Date deadlineTask = Date.valueOf(String.valueOf(deadline));
-                            Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), deadlineTask, String.valueOf(priority.getText()), String.valueOf(status.getText()), String.valueOf(subtask.getText()));
-                            controller.updateTask(taskToUpdate);
+                        Task taskToUpdate = new TaskImpl(String.valueOf(taskName.getText()), String.valueOf(description.getText()), String.valueOf(deadline.getText()), String.valueOf(priority.getText()), String.valueOf(status.getText()));
+                        controller.updateTask(taskToUpdate);
 
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
                     } catch (RuntimeException e1) {
                         updateViewTextConsole(e1.toString());
 
@@ -304,8 +279,7 @@ public class ClientTaskManagerViewImpl implements ClientTaskManagerView, Observe
             updateViewTextConsole(task.getTaskName() + " " +
                     task.getDescription() + " " +
                     task.getPriority() + " " +
-                    task.getStatus() + " " +
-                    task.getSubtask()
+                    task.getStatus()
             );
             taskPresenter.displayTask(task);
         }

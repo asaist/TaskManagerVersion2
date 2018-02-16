@@ -6,10 +6,9 @@ public interface Task {
     Integer id = 0;
     String t_name = null;
     String description = null;
-    Date deadline = null;
+    String deadline = null;
     String priority = null;
     String status = null;
-    String subtask = null;
 
     void setId(int id);
 
@@ -23,9 +22,9 @@ public interface Task {
 
     String getDescription();
 
-    void setDeadline(Date deadline);
+    void setDeadline(String deadline);
 
-    Date getDeadline();
+    String getDeadline();
 
     void setPriority(String priority);
 
@@ -34,9 +33,5 @@ public interface Task {
     void setStatus(String status);
 
     String getStatus();
-
-    void setSubtask(String subtask);
-
-    String getSubtask();
 
 }

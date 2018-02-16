@@ -5,10 +5,7 @@ import common.entity.Assignee;
 import common.entity.AssigneeImpl;
 import common.entity.Entity;
 import common.entity.TaskImpl;
-import common.service.GenericDao;
-import common.service.JDBCDao;
-import common.service.JDBCDaoAssignee;
-import common.service.TextDao;
+import common.service.*;
 import server.controller.TaskManagerController;
 import server.controller.TaskManagerControllerImpl;
 import server.model.TaskManagerModel;
@@ -25,13 +22,15 @@ import java.util.List;
 public class ServerTaskManager {
     public static void main(String[] args) throws IOException {
         GenericDao txtFileWork = new TextDao();
-        JDBCDaoAssignee jdbcDao = new JDBCDaoAssignee();
+        JDBCDaoAssignee jdbcDaoAssignee = new JDBCDaoAssignee();
+        JDBCDaoTask jdbcDaoTask = new JDBCDaoTask();
         TaskManagerModel model = new TaskManagerModelImpl(txtFileWork);
         TaskManagerController controller = new TaskManagerControllerImpl(model);
         TaskManagerView taskManagerViewImpl = new TaskManagerViewImpl(controller, model);
         taskManagerViewImpl.createView();
         model.addWatcher(taskManagerViewImpl);
-        model.addAllAssignee(jdbcDao.readAll());
+        model.addAllAssignee(jdbcDaoAssignee.readAll());
+        model.addAllTask(jdbcDaoTask.readAll());
 
         //в модели updateAssignee
 

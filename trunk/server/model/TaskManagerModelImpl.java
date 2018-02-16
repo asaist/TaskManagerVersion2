@@ -7,6 +7,7 @@ import common.entity.Entity;
 import common.entity.Task;
 import common.service.GenericDao;
 import common.service.JDBCDaoAssignee;
+import common.service.JDBCDaoTask;
 import server.view.TaskManagerView;
 
 import java.util.*;
@@ -46,16 +47,16 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         System.out.println("Запись добавлена.");
     }
 
+
     //Task
     public void addTask(Task task) {
-        //int j=0;
-        //task.setId(j);
         if (task != null) {
             checkTasks(task);
             tasks.add(task);
+            JDBCDaoTask dao = new JDBCDaoTask();
             dao.create((Entity) task);
             modelIsChanged();
-            System.out.println("Запись добавлена  в модель " + task.getTaskName());
+            System.out.println("Запись добавлена  в модель " + task.toString());
 
         }
     }
@@ -94,12 +95,14 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
 
     @Override
     public void deleteTask(Task taskToRemove) {
+        JDBCDaoTask dao = new JDBCDaoTask();
         dao.delete((Entity) taskToRemove);
         tasks.remove(taskToRemove);
         modelIsChanged();
     }
 
     public void updateTask(Task taskToUpdate) {
+        JDBCDaoTask dao = new JDBCDaoTask();
         dao.update((Entity) taskToUpdate);
         tasks.remove(searchTask(taskToUpdate));
         tasks.add(taskToUpdate);
@@ -133,9 +136,8 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         }
     }
 
-    public void updateAssignee (Assignee assigneeToUpdate){ //проблема с id
+    public void updateAssignee (Assignee assigneeToUpdate){
         JDBCDaoAssignee dao = new JDBCDaoAssignee();
-        System.out.println(assigneeToUpdate.getId());
         dao.update((Entity) assigneeToUpdate);
         assignees.remove(searchAssignee(assigneeToUpdate));
         assignees.add(assigneeToUpdate);
@@ -157,16 +159,6 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
 
     public void modelIsChanged() {
         setChanged();
