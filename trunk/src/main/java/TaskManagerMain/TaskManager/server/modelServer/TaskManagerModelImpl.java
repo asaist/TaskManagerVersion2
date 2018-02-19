@@ -19,10 +19,13 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
     private List<Task> tasks = new ArrayList();
     private List<Coloring> colorings = new ArrayList();
     private List<Assignee> assignees = new ArrayList();
-    private final GenericDao dao;
+    private final GenericDao daoTask;
+    private final GenericDao daoAssignee;
 
-    public TaskManagerModelImpl(GenericDao dao) {
-        this.dao = dao;
+    public TaskManagerModelImpl(GenericDao daoTask, GenericDao daoAssidnee) {
+
+        this.daoTask = daoTask;
+        this.daoAssignee = daoAssidnee;
     }
 
 
@@ -53,7 +56,7 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         if (task != null) {
             checkTasks(task);
             tasks.add(task);
-            dao.create((Entity) task);
+            daoTask.create((Entity) task);
             modelIsChanged();
             System.out.println("Запись добавлена  в модель " + task.toString());
 
@@ -94,13 +97,13 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
 
     @Override
     public void deleteTask(Task taskToRemove) {
-        dao.delete((Entity) taskToRemove);
+        daoTask.delete((Entity) taskToRemove);
         tasks.remove(taskToRemove);
         modelIsChanged();
     }
 
     public void updateTask(Task taskToUpdate) {
-        dao.update((Entity) taskToUpdate);
+        daoTask.update((Entity) taskToUpdate);
         tasks.remove(searchTask(taskToUpdate));
         tasks.add(taskToUpdate);
         modelIsChanged();
@@ -110,7 +113,7 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
     public void addAssaignee(Assignee assignee) {
         checkAssignees(assignee);
         assignees.add(assignee);
-        dao.create((Entity) assignee);
+        daoAssignee.create((Entity) assignee);
         modelIsChanged();
         System.out.println("Запись добавлена в модель " + assignee.toString());
     }
@@ -133,14 +136,14 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
     }
 
     public void updateAssignee (Assignee assigneeToUpdate){
-        dao.update((Entity) assigneeToUpdate);
+        daoAssignee.update((Entity) assigneeToUpdate);
         assignees.remove(searchAssignee(assigneeToUpdate));
         assignees.add(assigneeToUpdate);
         modelIsChanged();
     }
 
     public void deleteAssignee(Assignee assigneeToRemove) {
-        dao.delete((Entity) assigneeToRemove);
+        daoAssignee.delete((Entity) assigneeToRemove);
         assignees.remove(assigneeToRemove);
         modelIsChanged();
     }
