@@ -10,7 +10,6 @@ import TaskManagerMain.TaskManager.server.controllerServer.TaskManagerController
 import TaskManagerMain.TaskManager.server.controllerServer.TaskManagerControllerImpl;
 import TaskManagerMain.TaskManager.server.modelServer.TaskManagerModel;
 import TaskManagerMain.TaskManager.server.modelServer.TaskManagerModelImpl;
-//import server.viewServer.ClientDataViewImpl;
 import TaskManagerMain.TaskManager.server.viewServer.ClientDataViewImpl;
 import TaskManagerMain.TaskManager.server.viewServer.TaskManagerView;
 import TaskManagerMain.TaskManager.server.viewServer.TaskManagerViewImpl;
@@ -19,10 +18,9 @@ import java.util.List;
 
 public class ServerTaskManager {
     public static void main(String[] args) {
-        GenericDao txtFileWork = new TextDao();
-        JDBCDaoAssignee jdbcDaoAssignee = new JDBCDaoAssignee();
-        JDBCDaoTask jdbcDaoTask = new JDBCDaoTask();
-        TaskManagerModel model = new TaskManagerModelImpl(txtFileWork);
+        GenericDao jdbcDaoAssignee = new JDBCDaoAssignee();
+        GenericDao jdbcDaoTask = new JDBCDaoTask();
+        TaskManagerModel model = new TaskManagerModelImpl(jdbcDaoAssignee);
         TaskManagerController controller = new TaskManagerControllerImpl(model);
         TaskManagerView taskManagerViewImpl = new TaskManagerViewImpl(controller, model);
         taskManagerViewImpl.createView();
@@ -30,8 +28,5 @@ public class ServerTaskManager {
         model.addAllAssignee(jdbcDaoAssignee.readAll());
         model.addAllTask(jdbcDaoTask.readAll());
 
-        //TaskManagerView clientDataView = new ClientDataViewImpl(controllerServer, modelServer);
-       // clientDataView.createView();
-       // modelServer.addWatcher(clientDataView);
     }
 }

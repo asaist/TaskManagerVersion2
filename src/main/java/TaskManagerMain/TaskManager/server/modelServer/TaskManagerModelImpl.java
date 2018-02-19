@@ -53,7 +53,6 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         if (task != null) {
             checkTasks(task);
             tasks.add(task);
-            JDBCDaoTask dao = new JDBCDaoTask();
             dao.create((Entity) task);
             modelIsChanged();
             System.out.println("Запись добавлена  в модель " + task.toString());
@@ -95,14 +94,12 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
 
     @Override
     public void deleteTask(Task taskToRemove) {
-        JDBCDaoTask dao = new JDBCDaoTask();
         dao.delete((Entity) taskToRemove);
         tasks.remove(taskToRemove);
         modelIsChanged();
     }
 
     public void updateTask(Task taskToUpdate) {
-        JDBCDaoTask dao = new JDBCDaoTask();
         dao.update((Entity) taskToUpdate);
         tasks.remove(searchTask(taskToUpdate));
         tasks.add(taskToUpdate);
@@ -113,7 +110,6 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
     public void addAssaignee(Assignee assignee) {
         checkAssignees(assignee);
         assignees.add(assignee);
-        JDBCDaoAssignee dao = new JDBCDaoAssignee();
         dao.create((Entity) assignee);
         modelIsChanged();
         System.out.println("Запись добавлена в модель " + assignee.toString());
@@ -137,7 +133,6 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
     }
 
     public void updateAssignee (Assignee assigneeToUpdate){
-        JDBCDaoAssignee dao = new JDBCDaoAssignee();
         dao.update((Entity) assigneeToUpdate);
         assignees.remove(searchAssignee(assigneeToUpdate));
         assignees.add(assigneeToUpdate);
@@ -145,7 +140,6 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
     }
 
     public void deleteAssignee(Assignee assigneeToRemove) {
-        JDBCDaoAssignee dao = new JDBCDaoAssignee();
         dao.delete((Entity) assigneeToRemove);
         assignees.remove(assigneeToRemove);
         modelIsChanged();

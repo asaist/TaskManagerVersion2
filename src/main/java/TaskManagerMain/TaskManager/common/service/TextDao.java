@@ -8,7 +8,6 @@ import java.util.List;
 
 public class TextDao implements GenericDao {
 
-    //private static final String dirName = "server/textFile/";
     private static final String fileName = "textFile.txt";
 
 
