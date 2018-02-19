@@ -20,7 +20,7 @@ public class ServerTaskManager {
     public static void main(String[] args) {
         GenericDao jdbcDaoAssignee = new JDBCDaoAssignee();
         GenericDao jdbcDaoTask = new JDBCDaoTask();
-        TaskManagerModel model = new TaskManagerModelImpl(jdbcDaoAssignee);
+        TaskManagerModel model = new TaskManagerModelImpl(jdbcDaoTask, jdbcDaoAssignee);
         TaskManagerController controller = new TaskManagerControllerImpl(model);
         TaskManagerView taskManagerViewImpl = new TaskManagerViewImpl(controller, model);
         taskManagerViewImpl.createView();
