@@ -32,9 +32,6 @@ public class ColoringImpl implements Coloring, Entity {
     public boolean equals(Object anObject) {
         if (anObject instanceof ColoringImpl) {
             ColoringImpl coloring = (ColoringImpl) anObject;
-                /*if (name == null || assignee.getName() == null)  {
-                    return false;
-                }*/
 
             if (!color.equals(coloring.getColor())) {
                 return false;

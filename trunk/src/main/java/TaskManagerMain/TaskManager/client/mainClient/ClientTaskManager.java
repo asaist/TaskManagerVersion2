@@ -14,7 +14,6 @@ import TaskManagerMain.TaskManager.server.controllerServer.TaskManagerController
 import TaskManagerMain.TaskManager.server.controllerServer.TaskManagerControllerImpl;
 import TaskManagerMain.TaskManager.server.modelServer.TaskManagerModel;
 import TaskManagerMain.TaskManager.server.modelServer.TaskManagerModelImpl;
-//import server.viewServer.ClientDataViewImpl;
 import TaskManagerMain.TaskManager.server.viewServer.TaskManagerView;
 import TaskManagerMain.TaskManager.server.viewServer.TaskManagerViewImpl;
 
@@ -27,7 +26,6 @@ public class ClientTaskManager {
         ServerDataViewImpl ServerDadaTransaction = new ServerDataViewImpl();
         ClientTaskManagerModel model = new ClientTaskManagerModelImpl(ServerDadaTransaction);
         ClientTaskManagerController controller = new ClientTaskManagerControllerImpl(model);
-        //modelServer.addAllTask(controllerServer.isCorrectDate(ServerDadaTransaction.readAll()));
         ClientTaskManagerView view = new ClientTaskManagerViewImpl(controller, model);
         view.createView();
         model.addWatcher(view);
