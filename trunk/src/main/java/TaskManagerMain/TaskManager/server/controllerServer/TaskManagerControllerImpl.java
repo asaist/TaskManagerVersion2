@@ -26,6 +26,7 @@ public class TaskManagerControllerImpl implements TaskManagerController {
     }
 
     //Task
+
     public void addTask(String taskName, String description, String deadline, String priority, String status) {
         Task task = new TaskImpl(taskName, description, deadline, priority, status);
         checkFieldsTask(task);
@@ -91,6 +92,8 @@ public class TaskManagerControllerImpl implements TaskManagerController {
         checkFieldsAssignee(assigneeToUpdate);
         model.updateAssignee(assigneeToUpdate);
     }
+
+
 
 
     public void checkFieldsAssignee(Assignee assignee) {

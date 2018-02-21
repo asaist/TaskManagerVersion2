@@ -21,7 +21,7 @@ public interface TaskManagerModel {
 
     void modelIsChanged();
 
-    void addAllAssignee(List<Entity> assignees1);
+    void addAllAssignee();
 
     void deleteAssignee(Assignee assigneeToRemove);
 
@@ -31,7 +31,7 @@ public interface TaskManagerModel {
 
     void updateTask(Task taskToUpdate);
 
-    void addAllTask(List<Entity> entities);
+    void addAllTask();
 
     void addWatcher(TaskManagerView view);
 

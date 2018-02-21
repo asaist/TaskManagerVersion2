@@ -1,5 +1,6 @@
 package TaskManagerMain.TaskManager.common.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public interface Task {

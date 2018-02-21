@@ -63,14 +63,15 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         }
     }
 
-    public void addAllTask(List<Entity> entities1) {
+    public void addAllTask() {
 
-        if (entities1 == null) {
+        List<Entity> allEntities = daoTask.readAll();
+        if (allEntities == null) {
             System.out.println("Задач пока нет");
 
         } else {
 
-            for (Entity entity : entities1) {
+            for (Entity entity : allEntities) {
                 if (entity != null) {
                     checkTasks((Task) entity);
                     tasks.add((Task) entity);
@@ -119,13 +120,15 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
     }
 
     @Override
-    public void addAllAssignee(List<Entity> assignees1) {
-        if (assignees1 == null) {
+    public void addAllAssignee() {
+
+        List<Entity> allAssignees = daoAssignee.readAll();
+        if (allAssignees == null) {
             System.out.println("Исполнителей пока нет");
 
         } else {
 
-            for (Entity entity : assignees1) {
+            for (Entity entity : allAssignees) {
                 if (entity != null) {
                     checkAssignees((Assignee) entity);
                     assignees.add((Assignee) entity);
