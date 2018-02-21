@@ -25,8 +25,8 @@ public class ServerTaskManager {
         TaskManagerView taskManagerViewImpl = new TaskManagerViewImpl(controller, model);
         taskManagerViewImpl.createView();
         model.addWatcher(taskManagerViewImpl);
-        model.addAllAssignee(jdbcDaoAssignee.readAll());
-        model.addAllTask(jdbcDaoTask.readAll());
+        model.addAllAssignee();
+        model.addAllTask();
 
     }
 }
