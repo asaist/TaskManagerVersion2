@@ -56,6 +56,15 @@ public class TaskManagerModelImplTest {
     }
 
     @Test
+    public void testAddAllAssignee() {
+
+        model.addAllAssignee();
+
+        verify(daoAssignee, atLeastOnce()).readAll();
+
+    }
+
+    @Test
     public void testDeleteAssignee() {
 
         model.deleteAssignee(assignee);
@@ -86,6 +95,15 @@ public class TaskManagerModelImplTest {
         verify(daoTask).create(task);
         assertEquals(true, matcher.matches());
         verify(daoTask, atLeastOnce()).create(task);
+
+    }
+
+    @Test
+    public void testAddAllTask() {
+
+        model.addAllTask();
+
+        verify(daoTask, atLeastOnce()).readAll();
 
     }
 
