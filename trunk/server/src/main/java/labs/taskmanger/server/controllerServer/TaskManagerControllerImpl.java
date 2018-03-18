@@ -17,7 +17,6 @@ public class TaskManagerControllerImpl implements TaskManagerController {
     TaskManagerView view;
     TaskManagerController controller;
 
-
     public TaskManagerControllerImpl(TaskManagerModel model) {
         this.model = model;
         view = new TaskManagerViewImpl(this, model);

@@ -20,6 +20,8 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
     private final GenericDao daoTask;
     private final GenericDao daoAssignee;
 
+
+    @Inject
     public TaskManagerModelImpl(GenericDao <Task> daoTask, GenericDao <Assignee> daoAssidnee) {
 
         this.daoTask = daoTask;
