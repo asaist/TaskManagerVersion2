@@ -4,7 +4,6 @@ import labs.taskmanger.common.entity.Assignee;
 import labs.taskmanger.common.entity.AssigneeImpl;
 import labs.taskmanger.common.entity.Task;
 import labs.taskmanger.common.entity.TaskImpl;
-import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.server.modelServer.TaskManagerModel;
 import labs.taskmanger.server.modelServer.TaskManagerModelImpl;
 import org.junit.Before;
@@ -22,8 +21,6 @@ public class TaskManagerControllerImplTest {
 
     Assignee assignee;
     Task task;
-    GenericDao<Assignee> daoAssignee;
-    GenericDao<Task> daoTask;
     TaskManagerModel model;
     TaskManagerController controller;
     String regexp;

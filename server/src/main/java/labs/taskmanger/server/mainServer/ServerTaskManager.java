@@ -19,6 +19,7 @@ public class ServerTaskManager {
         TaskManagerModel model = new TaskManagerModelImpl(jdbcDaoTask, jdbcDaoAssignee);
         TaskManagerController controller = new TaskManagerControllerImpl(model);
         TaskManagerView taskManagerViewImpl = new TaskManagerViewImpl(controller, model);
+
         taskManagerViewImpl.createView();
         model.addWatcher(taskManagerViewImpl);
         model.addAllAssignee();

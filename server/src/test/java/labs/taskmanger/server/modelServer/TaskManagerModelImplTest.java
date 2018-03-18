@@ -4,15 +4,19 @@ import labs.taskmanger.common.entity.*;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
 import labs.taskmanger.common.service.JDBCDaoTask;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+//import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -46,11 +50,11 @@ public class TaskManagerModelImplTest {
         model.addAssaignee(assignee);
 
 
-        Pattern pattern = Pattern.compile(regexp);
+//        Pattern pattern = Pattern.compile(regexp);
         Matcher matcher = pattern.matcher(name);
 
         verify(daoAssignee).create(assignee);
-        assertEquals(true, matcher.matches());
+//        assertThat(assignee, hasName());
         verify(daoAssignee, atLeastOnce()).create(assignee);
 
     }
@@ -89,13 +93,30 @@ public class TaskManagerModelImplTest {
 
         model.addTask(task);
 
-        Pattern pattern = Pattern.compile(regexp);
-        Matcher matcher = pattern.matcher(name);
+//        Pattern pattern = Pattern.compile(regexp);
+//        Matcher matcher = pattern.matcher(name);
 
         verify(daoTask).create(task);
-        assertEquals(true, matcher.matches());
+//        assertEquals(true, matcher.matches());
+        assertThat(task, hasName(name));
         verify(daoTask, atLeastOnce()).create(task);
+        verify(daoTask).create(argThat(hasName(name)))
 
+    }
+
+    private Matcher<Task> hasName(String name) {
+        return new TypeSafeDiagnosingMatcher<Task>() {
+            @Override
+            protected boolean matchesSafely(Task task, Description description) {
+                return task.getTaskName().equals(name);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("errr");
+
+            }
+        };
     }
 
     @Test
