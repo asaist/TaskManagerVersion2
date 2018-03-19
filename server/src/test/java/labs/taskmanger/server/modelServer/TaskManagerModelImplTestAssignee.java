@@ -11,10 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-
-//import java.util.regex.Matcher;
-//import java.util.regex.Pattern;
-
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.matches;
@@ -22,10 +18,9 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class TaskManagerModelImplTest {
+public class TaskManagerModelImplTestAssignee {
 
     Assignee assignee;
-    Task task;
     GenericDao<Assignee> daoAssignee;
     GenericDao<Task> daoTask;
     TaskManagerModel model;
@@ -38,7 +33,6 @@ public class TaskManagerModelImplTest {
         regexp = "1";
         name = "1";
         assignee = new AssigneeImpl("1", "2", "3");
-        task = new TaskImpl("1", "2", "3", "4", "4");
         daoAssignee = mock(GenericDao.class);
         daoTask = mock(GenericDao.class);
         model = new TaskManagerModelImpl(daoTask, daoAssignee);
@@ -49,13 +43,10 @@ public class TaskManagerModelImplTest {
 
         model.addAssaignee(assignee);
 
-
-//        Pattern pattern = Pattern.compile(regexp);
-        Matcher matcher = pattern.matcher(name);
-
         verify(daoAssignee).create(assignee);
-//        assertThat(assignee, hasName());
+        assertThat(assignee, hasName());
         verify(daoAssignee, atLeastOnce()).create(assignee);
+        verify(daoAssignee).create(argThat(hasName()));
 
     }
 
@@ -63,7 +54,6 @@ public class TaskManagerModelImplTest {
     public void testAddAllAssignee() {
 
         model.addAllAssignee();
-
         verify(daoAssignee, atLeastOnce()).readAll();
 
     }
@@ -88,64 +78,20 @@ public class TaskManagerModelImplTest {
 
     }
 
-    @Test
-    public void testAddTask() {
+    private Matcher<Assignee> hasName() {
 
-        model.addTask(task);
-
-//        Pattern pattern = Pattern.compile(regexp);
-//        Matcher matcher = pattern.matcher(name);
-
-        verify(daoTask).create(task);
-//        assertEquals(true, matcher.matches());
-        assertThat(task, hasName(name));
-        verify(daoTask, atLeastOnce()).create(task);
-        verify(daoTask).create(argThat(hasName(name)))
-
-    }
-
-    private Matcher<Task> hasName(String name) {
-        return new TypeSafeDiagnosingMatcher<Task>() {
+        return new TypeSafeDiagnosingMatcher<Assignee>() {
             @Override
-            protected boolean matchesSafely(Task task, Description description) {
-                return task.getTaskName().equals(name);
+            protected boolean matchesSafely(Assignee assignee, Description description) {
+                return assignee.getName().equals(name);
             }
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("errr");
+                description.appendText("error");
 
             }
         };
-    }
-
-    @Test
-    public void testAddAllTask() {
-
-        model.addAllTask();
-
-        verify(daoTask, atLeastOnce()).readAll();
-
-    }
-
-    @Test
-    public void testDeleteTask() {
-
-        model.deleteTask(task);
-
-        verify(daoTask).delete(task);
-        verify(daoTask, atLeastOnce()).delete(task);
-
-    }
-
-    @Test
-    public void testUpdateTask() {
-
-        model.updateTask(task);
-
-        verify(daoTask).update(task);
-        verify(daoTask, atLeastOnce()).update(task);
-
     }
 
 }

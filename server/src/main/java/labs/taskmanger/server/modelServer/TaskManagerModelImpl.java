@@ -1,6 +1,7 @@
 package labs.taskmanger.server.modelServer;
 
 
+import com.google.inject.Inject;
 import labs.taskmanger.common.entity.Assignee;
 import labs.taskmanger.common.entity.Coloring;
 import labs.taskmanger.common.entity.Entity;
