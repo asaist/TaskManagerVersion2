@@ -1,5 +1,6 @@
 package labs.taskmanger.server.controllerServer;
 
+import com.google.inject.Inject;
 import labs.taskmanger.common.entity.Task;
 import labs.taskmanger.common.entity.TaskImpl;
 import labs.taskmanger.server.modelServer.TaskManagerModel;
@@ -17,6 +18,8 @@ public class TaskManagerControllerImpl implements TaskManagerController {
     TaskManagerView view;
     TaskManagerController controller;
 
+
+    @Inject
     public TaskManagerControllerImpl(TaskManagerModel model) {
         this.model = model;
         view = new TaskManagerViewImpl(this, model);

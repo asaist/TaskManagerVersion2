@@ -1,5 +1,6 @@
 package labs.taskmanger.server.viewServer;
 
+import com.google.inject.Inject;
 import labs.taskmanger.common.entity.Assignee;
 import labs.taskmanger.common.entity.Task;
 import labs.taskmanger.common.entity.TaskImpl;
@@ -52,7 +53,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     private final String textPriority = "Priority";
     private final String textStatus = "Status";
 
-
+    @Inject
     public TaskManagerViewImpl(TaskManagerController controller, TaskManagerModel model) {
         this.controller = controller;
         this.model = model;
