@@ -58,6 +58,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         this.controller = controller;
         this.model = model;
 
+        model.addWatcher(this);
 
         viewFrame = new JFrame(textViewFrame);
         tasksViewPanel = new JPanel();
