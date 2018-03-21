@@ -7,8 +7,10 @@ import labs.taskmanger.common.entity.Coloring;
 import labs.taskmanger.common.entity.Entity;
 import labs.taskmanger.common.entity.Task;
 import labs.taskmanger.common.service.GenericDao;
+import labs.taskmanger.common.service.JDBCDaoAssignee;
+import labs.taskmanger.common.service.JDBCDaoTask;
 import labs.taskmanger.server.viewServer.TaskManagerView;
-
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 
@@ -25,10 +27,10 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
 
 
     @Inject
-    public TaskManagerModelImpl(GenericDao <Task> daoTask, GenericDao <Assignee> daoAssidnee) {
+    public TaskManagerModelImpl(JDBCDaoTask daoTask, JDBCDaoAssignee daoAssignee) {
 
         this.daoTask = daoTask;
-        this.daoAssignee = daoAssidnee;
+        this.daoAssignee = daoAssignee;
     }
 
 
@@ -161,6 +163,12 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
 
             }
         }
+    }
+
+    @PostConstruct
+    public void addAll() {
+        addAllAssignee();
+        addAllTask();
     }
 
     public void modelIsChanged() {

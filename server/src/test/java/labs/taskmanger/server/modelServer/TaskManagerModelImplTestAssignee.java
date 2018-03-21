@@ -21,8 +21,8 @@ import static org.mockito.Mockito.verify;
 public class TaskManagerModelImplTestAssignee {
 
     Assignee assignee;
-    GenericDao<Assignee> daoAssignee;
-    GenericDao<Task> daoTask;
+    JDBCDaoAssignee daoAssignee;
+    JDBCDaoTask daoTask;
     TaskManagerModel model;
     String regexp;
     String name;
@@ -33,8 +33,8 @@ public class TaskManagerModelImplTestAssignee {
         regexp = "1";
         name = "1";
         assignee = new AssigneeImpl("1", "2", "3");
-        daoAssignee = mock(GenericDao.class);
-        daoTask = mock(GenericDao.class);
+        daoAssignee = mock(JDBCDaoAssignee.class);
+        daoTask = mock(JDBCDaoTask.class);
         model = new TaskManagerModelImpl(daoTask, daoAssignee);
     }
 
