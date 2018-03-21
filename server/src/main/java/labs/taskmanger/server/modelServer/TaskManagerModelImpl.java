@@ -61,7 +61,7 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         if (task != null) {
             checkTasks(task);
             tasks.add(task);
-            daoTask.create((Entity) task);
+            daoTask.create(task);
             modelIsChanged();
             System.out.println("Запись добавлена  в модель " + task.toString());
 
