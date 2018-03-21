@@ -1,0 +1,21 @@
+<%@ page import="labs.taskmanger.server.modelServer.TaskManagerModel" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TaskManager</title>
+</head>
+<body>
+    <table>
+        <td>
+            <tr>
+                <!--<%=%>-->
+            </tr>
+            <tr>
+
+            </tr>
+        </td>
+    </table>
+
+</body>
+</html>
