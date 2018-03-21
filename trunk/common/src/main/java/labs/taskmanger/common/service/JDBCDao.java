@@ -32,7 +32,7 @@ public abstract class JDBCDao<TEntity extends Entity> implements GenericDao<TEnt
     public Connection connectionToDatabase() {
         final String USER_NAME = "system";
         final String PASSWORD = "qwerty";
-        final String URL = "jdbc:oracle:thin:@localhost:1521:taskmanger";
+        final String URL = "jdbc:oracle:thin:@localhost:1521:TaskManger";
 
         Connection connection = null;
 
