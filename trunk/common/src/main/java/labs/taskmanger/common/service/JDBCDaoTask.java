@@ -17,7 +17,7 @@ public class JDBCDaoTask extends JDBCDao<Task> {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO TASK(ID, NAME, DESCRIPTION, DEADLINE, PRIORITY, STATUS) VALUES (TASK_SEQUENCE.nextval, '"+task.getTaskName()+"',  '"+task.getDescription()+"', '"+task.getDeadline()+"', '"+task.getPriority()+"', '"+task.getStatus()+"')");
             statement.executeUpdate();
             System.out.println("Запись " + task.toString() + " добавлена в базу данных");
-            ResultSet resultSet = statement.executeQuery("select ID from TASK");
+            ResultSet resultSet = statement.executeQuery("SELECT ID from TASK");
 
             while (resultSet.next()){
                 task.setId(resultSet.getInt("ID"));
@@ -36,7 +36,7 @@ public class JDBCDaoTask extends JDBCDao<Task> {
         Connection connection = super.connectionToDatabase();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select id, name, description, deadline, priority, status from Task");
+            ResultSet resultSet = statement.executeQuery("SELECT ID, NAME, DESCRIPTION, DEADLINE, PRIORITY, STATUS from TASK");
             while (resultSet.next()){
                 if (id.equals(resultSet.getInt("ID"))) {
                     task.setId(resultSet.getInt("ID"));
@@ -97,7 +97,7 @@ public class JDBCDaoTask extends JDBCDao<Task> {
         Connection connection = super.connectionToDatabase();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select id, name, description, deadline, priority, status from Task");
+            ResultSet resultSet = statement.executeQuery("SELECT ID, NAME, DESCRIPTION, DEADLINE, PRIORITY, STATUS from TASK");
             while (resultSet.next()) {
 
                 Task task = new TaskImpl();

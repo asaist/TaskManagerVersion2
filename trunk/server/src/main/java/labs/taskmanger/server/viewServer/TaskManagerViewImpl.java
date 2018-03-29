@@ -21,7 +21,6 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     private final TaskManagerController controller;
     private final TaskManagerModel model;
 
-
     private final JPanel assaigneeControlPanel;
     private final JPanel taskControlPanel;
     private final JPanel globalPanel;
@@ -83,7 +82,6 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
     }
 
     public void createView() {
-
 
         viewFrame.pack();
         viewFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -160,8 +158,8 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
         }
         );
 
-        displayModels(model);
 
+        displayModels(model);
     }
 
 
