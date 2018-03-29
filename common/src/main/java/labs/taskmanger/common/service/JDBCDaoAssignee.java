@@ -97,7 +97,7 @@ public class JDBCDaoAssignee extends JDBCDao<Assignee> {
         Connection connection = super.connectionToDatabase();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select id, name, lastname, post from Assignee");
+            ResultSet resultSet = statement.executeQuery("SELECT ID, NAME, LASTNAME, POST FROM ASSIGNEE");
             while (resultSet.next()) {
                 Assignee assignee = new AssigneeImpl();
                 assignee.setId(resultSet.getInt("ID"));
