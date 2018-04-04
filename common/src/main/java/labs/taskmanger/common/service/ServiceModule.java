@@ -6,6 +6,8 @@ import labs.taskmanger.common.entity.Entity;
 import labs.taskmanger.common.entity.Task;
 import com.google.inject.AbstractModule;
 
+import static jdk.nashorn.internal.objects.NativeFunction.bind;
+
 public class ServiceModule extends AbstractModule {
 
     @Override

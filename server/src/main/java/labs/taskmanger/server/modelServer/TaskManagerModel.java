@@ -4,6 +4,7 @@ import labs.taskmanger.common.entity.Assignee;
 import labs.taskmanger.common.entity.Task;
 import labs.taskmanger.server.viewServer.TaskManagerView;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 public interface TaskManagerModel {
@@ -32,5 +33,7 @@ public interface TaskManagerModel {
     void addAllTask();
 
     void addWatcher(TaskManagerView view);
+
+    void addAll();
 
 }

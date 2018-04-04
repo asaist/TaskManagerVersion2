@@ -15,8 +15,8 @@ import java.util.Observable;
 
 
 
-public class ClientDataViewImpl implements TaskManagerView {
-    boolean flag = false;
+public class ClientDataViewImpl /*implements TaskManagerView*/ {
+   /* boolean flag = false;
     DataInputStream in;
     DataOutputStream out;
     TaskManagerController controller;
@@ -127,6 +127,6 @@ public class ClientDataViewImpl implements TaskManagerView {
     public void update(Observable o, Object arg) {
         TaskManagerModel model = (TaskManagerModel) o;
         displayModels(model);
-    }
+    }*/
 
 }
