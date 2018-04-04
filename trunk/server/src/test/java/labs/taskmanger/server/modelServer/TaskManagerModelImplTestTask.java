@@ -4,6 +4,8 @@ import labs.taskmanger.common.entity.*;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
 import labs.taskmanger.common.service.JDBCDaoTask;
+import labs.taskmanger.server.modelServer.TaskManagerModel;
+import labs.taskmanger.server.modelServer.TaskManagerModelImpl;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -87,7 +89,6 @@ public class TaskManagerModelImplTestTask {
                 return task.getTaskName().equals(name);
             }
 
-            @Override
             public void describeTo(Description description) {
                 description.appendText("error");
 

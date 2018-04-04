@@ -1,7 +1,7 @@
 package labs.taskmanger.server.modelServer;
 
-
 import com.google.inject.Inject;
+
 import labs.taskmanger.common.entity.Assignee;
 import labs.taskmanger.common.entity.Coloring;
 import labs.taskmanger.common.entity.Entity;
@@ -10,7 +10,6 @@ import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
 import labs.taskmanger.common.service.JDBCDaoTask;
 import labs.taskmanger.server.viewServer.TaskManagerView;
-
 import javax.annotation.PostConstruct;
 import java.util.*;
 
@@ -87,7 +86,7 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
             }
         }
     }
-    @Override
+
     public void addWatcher(TaskManagerView view) {
         addObserver(view);
     }
@@ -101,7 +100,7 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         }
     }
 
-    @Override
+
     public void deleteTask(Task taskToRemove) {
         daoTask.delete((Entity) taskToRemove);
         tasks.remove(taskToRemove);
@@ -124,7 +123,6 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         System.out.println("Запись добавлена в модель " + assignee.toString());
     }
 
-    @Override
     public void addAllAssignee() {
 
         List<Entity> allAssignees = daoAssignee.readAll();
@@ -165,7 +163,6 @@ public class TaskManagerModelImpl extends Observable implements TaskManagerModel
         }
     }
 
-    @PostConstruct
     public void addAll() {
         addAllAssignee();
         addAllTask();

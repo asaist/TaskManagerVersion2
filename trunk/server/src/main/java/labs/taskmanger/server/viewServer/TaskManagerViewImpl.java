@@ -272,7 +272,7 @@ public class TaskManagerViewImpl implements TaskManagerView, Observer {
 
 
 
-    @Override
+
     public void update(Observable o, Object arg) {
         TaskManagerModel model = (TaskManagerModel) o;
         displayModels(model);
