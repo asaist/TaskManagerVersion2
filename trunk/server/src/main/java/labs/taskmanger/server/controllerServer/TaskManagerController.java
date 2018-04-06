@@ -1,9 +1,8 @@
 package labs.taskmanger.server.controllerServer;
 
+
 import labs.taskmanger.common.entity.Assignee;
 import labs.taskmanger.common.entity.Task;
-
-import java.time.LocalDateTime;
 
 public interface TaskManagerController {
     void addAssignee(String name, String lastName, String post);
@@ -18,6 +17,5 @@ public interface TaskManagerController {
 
     void updateTask(Task taskToUpdate);
 
-    LocalDateTime stringToDateTask(String taskDeadline);
 }
 

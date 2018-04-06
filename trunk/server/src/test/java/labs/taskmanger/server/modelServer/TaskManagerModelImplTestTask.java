@@ -1,21 +1,15 @@
 package labs.taskmanger.server.modelServer;
 
 import labs.taskmanger.common.entity.*;
-import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
 import labs.taskmanger.common.service.JDBCDaoTask;
-import labs.taskmanger.server.modelServer.TaskManagerModel;
-import labs.taskmanger.server.modelServer.TaskManagerModelImpl;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

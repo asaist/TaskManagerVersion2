@@ -8,7 +8,6 @@ import labs.taskmanger.server.modelServer.ModelModule;
 import labs.taskmanger.server.viewServer.TaskManagerView;
 import labs.taskmanger.server.viewServer.ViewModule;
 
-
 public class ServerTaskManager {
     public static void main(String[] args) {
 
