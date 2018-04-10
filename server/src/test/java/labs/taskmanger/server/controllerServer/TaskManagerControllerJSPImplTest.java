@@ -17,7 +17,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class TaskManagerControllerImplTest {
+public class TaskManagerControllerJSPImplTest {
 
     Assignee assignee;
     Task task;
