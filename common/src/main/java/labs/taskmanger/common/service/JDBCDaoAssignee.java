@@ -22,6 +22,7 @@ public class JDBCDaoAssignee extends JDBCDao<Assignee> {
             while (resultSet.next()){
                assignee.setId(resultSet.getInt("ID"));
             }
+            resultSet.close();
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -46,7 +47,7 @@ public class JDBCDaoAssignee extends JDBCDao<Assignee> {
                     System.out.println("Запись загружена "+ assignee.toString());
                 }
             }
-
+            resultSet.close();
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -108,6 +109,7 @@ public class JDBCDaoAssignee extends JDBCDao<Assignee> {
                 System.out.println("Запись " + assignee.toString() + " загружена");
             }
             System.out.println("Список Assignee загружен");
+            resultSet.close();
             statement.close();
             connection.close();
         }
@@ -117,9 +119,6 @@ public class JDBCDaoAssignee extends JDBCDao<Assignee> {
         catch (NullPointerException e) {
             System.err.println("Невозможно произвести чтение " + e);
         }
-
-
-
 
         return entitys;
     }
