@@ -22,6 +22,7 @@ public class JDBCDaoTask extends JDBCDao<Task> {
             while (resultSet.next()){
                 task.setId(resultSet.getInt("ID"));
             }
+            resultSet.close();
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -48,7 +49,7 @@ public class JDBCDaoTask extends JDBCDao<Task> {
                     System.out.println("Запись загружена "+ task.toString());
                 }
             }
-
+            resultSet.close();
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -111,6 +112,7 @@ public class JDBCDaoTask extends JDBCDao<Task> {
                 System.out.println("Запись " + task.toString() + " загружена");
             }
             System.out.println("Список Task загружен ");
+            resultSet.close();
             statement.close();
             connection.close();
         }
