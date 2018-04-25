@@ -35,9 +35,16 @@
     <c:forEach items="${assignees}" var="assignee">
 
         <tr>
-            <td> <c:out value = "${assignee.name}" /></td>
-            <td> <c:out value = "${assignee.lastName}"/></td>
-            <td> <c:out value = "${assignee.post}"/></td>
+            <td> <input type="text" name="nameAssignee" value="<c:out value = "${assignee.name}" />"></td>
+            <td> <input type="text" name="lastNameAssignee" value="<c:out value = "${assignee.lastName}" />"></td>
+            <td> <input type="text" name="postAssignee" value="<c:out value = "${assignee.post}" />"></td>
+
+            <form name="exportForm" action="http://localhost:8080/exportAssignee" method="post">
+                <td><input type="text" name="nameExport" value = "<c:out value = "${assignee.name}" />"></td>
+                <td><input type="text" name="lastNameExport" value = "<c:out value = "${assignee.lastName}" />"></td>
+                <td><input type="text" name="postExport" value = "<c:out value = "${assignee.post}" />"></td>
+                <td><input type="Submit" name="Submit" value = "Export"></td>
+            </form>
         </tr>
 
     </c:forEach>
