@@ -1,7 +1,12 @@
 package labs.taskmanger.common.entity;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "Assignee")
 public class AssigneeImpl implements Assignee, Entity {
     private int id;
+
     private String name;
     private String lastName;
     private String post;
@@ -34,14 +39,18 @@ public class AssigneeImpl implements Assignee, Entity {
         this.id = id;
     }
 
+    @XmlElement
+    @Override
     public String getLastName() {
         return lastName;
     }
 
+    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @XmlElement
     @Override
     public String getPost() {
         return post;
@@ -52,6 +61,7 @@ public class AssigneeImpl implements Assignee, Entity {
         this.post = post;
     }
 
+    @XmlElement
     @Override
     public void setName(String name) {
         this.name = name;

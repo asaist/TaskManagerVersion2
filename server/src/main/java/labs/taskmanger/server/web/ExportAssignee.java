@@ -18,39 +18,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/loadAssignee")
-    public class ControllerServletAssignee extends HttpServlet {
-
+@WebServlet("/exportAssignee")
+public class ExportAssignee extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GenericDao assigneeDAO = new JDBCDaoAssignee();
-        List<Entity> entities = assigneeDAO.readAll();
-        List<Assignee> assignees = parseListEntityToListAssignee(entities);
-        request.setAttribute("assignees", assignees);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("allAssignee.jsp");
-        dispatcher.forward(request, response);
+        doPost(request, response);
 
-        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
 
-        String name  = request.getParameter("name");
-        String lastName  = request.getParameter("lastName");
+        String name  = request.getParameter("nameExport");
+        String lastName  = request.getParameter("lastNameExport");
+        String post = request.getParameter("postExport");
 
 
         SearchBeanForAssignee searchBeanForAssignee = new SearchBeanForAssigneeImpl();
         searchBeanForAssignee.setName(name);
         searchBeanForAssignee.setLastName(lastName);
-        List<Assignee> assignees = searchBeanForAssignee.searchAssigneeOnJSP();
-
-        request.setAttribute("assignees", assignees);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("allAssignee.jsp");
-        dispatcher.forward(request, response);
+        searchBeanForAssignee.setPost(post);
+        searchBeanForAssignee.exportAssigneeToXML();
 
 
     }
@@ -65,6 +57,5 @@ import java.util.List;
         }
         return assignees;
     }
-
 
 }
