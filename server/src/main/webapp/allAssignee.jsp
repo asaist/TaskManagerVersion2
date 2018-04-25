@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page import="labs.taskmanger.common.service.JDBCDaoAssignee" %>
 <%@ page import="labs.taskmanger.common.service.GenericDao" %>
@@ -41,30 +42,14 @@
 
     </c:forEach>
 
-    <%  GenericDao daoAssignee = new JDBCDaoAssignee();
-        List<Entity> allAssignee = daoAssignee.readAll();
-        for (Entity assignee: allAssignee){
-            AssigneeImpl assignee1 = (AssigneeImpl) assignee;
-    %>
-
-    <%
-        }
-    %>
-
-
     <tr>
-        <td>
-            <button type="button" onclick="">Search</button>
-        </td>
-
-        <td>
-            <input type="text" id="name" name="name" value="Name"/>
-        </td>
-
-        <td>
-            <input type="text" id="lastName" name="lastName" value="Last Name" />
-        </td>
+        <form name="searchForm" action="http://localhost:8080/loadAssignee" method="post">
+            <td><input type="text" name="name" value="Name"></td>
+            <td><input type="text" name="lastName" value="Last Name"></td>
+            <td><input type="Submit" name="Submit" value="Search"></td>
+        </form>
     </tr>
+
 </table>
 
 <a href="main.jsp">Main</a>
