@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<a href="allTask.jsp">All Task</a>
-<a href="allAssignee.jsp">All Assignee</a>
+<a href="http://localhost:8080/loadTask">All Task</a>
+<a href="http://localhost:8080/loadAssignee">All Assignee</a>
 </body>
 </html>
