@@ -5,8 +5,8 @@ import labs.taskmanger.common.entity.AssigneeImpl;
 import labs.taskmanger.common.entity.Entity;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
-import labs.taskmanger.server.ejb.asssignee.SearchBeanForAssignee;
-import labs.taskmanger.server.ejb.asssignee.SearchBeanForAssigneeImpl;
+//import labs.taskmanger.server.ejb.asssignee.SearchBeanForAssignee;
+//import labs.taskmanger.server.ejb.asssignee.SearchBeanForAssigneeImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,12 +43,12 @@ import java.util.List;
         String lastName  = request.getParameter("lastName");
 
 
-        SearchBeanForAssignee searchBeanForAssignee = new SearchBeanForAssigneeImpl();
-        searchBeanForAssignee.setName(name);
-        searchBeanForAssignee.setLastName(lastName);
-        List<Assignee> assignees = searchBeanForAssignee.searchAssigneeOnJSP();
+//        SearchBeanForAssignee searchBeanForAssignee = new SearchBeanForAssigneeImpl();
+//        searchBeanForAssignee.setName(name);
+//        searchBeanForAssignee.setLastName(lastName);
+//        List<Assignee> assignees = searchBeanForAssignee.searchAssigneeOnJSP();
 
-        request.setAttribute("assignees", assignees);
+//        request.setAttribute("assignees", assignees);
         RequestDispatcher dispatcher = request.getRequestDispatcher("allAssignee.jsp");
         dispatcher.forward(request, response);
 

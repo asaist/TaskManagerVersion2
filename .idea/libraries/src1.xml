@@ -1,0 +1,39 @@
+<component name="libraryTable">
+  <library name="src1">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$USER_HOME$/libre/guice-master/core/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/core/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/examples/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/assistedinject/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/assistedinject/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/dagger-adapter/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/dagger-adapter/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/grapher/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/grapher/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/jmx/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/jmx/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/jndi/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/mini/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/mini/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/persist/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/persist/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/service/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/service/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/servlet/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/servlet/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/spring/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/spring/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/struts2/example/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/struts2/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/struts2/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/testlib/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/testlib/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/throwingproviders/src" />
+      <root url="file://$USER_HOME$/libre/guice-master/extensions/throwingproviders/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/jdk8-tests/test" />
+      <root url="file://$USER_HOME$/libre/guice-master/lib/build/jdiff" />
+    </SOURCES>
+  </library>
+</component>

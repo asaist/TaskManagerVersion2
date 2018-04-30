@@ -5,8 +5,7 @@ import labs.taskmanger.common.entity.AssigneeImpl;
 import labs.taskmanger.common.entity.Entity;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
-import labs.taskmanger.server.ejb.asssignee.SearchBeanForAssignee;
-import labs.taskmanger.server.ejb.asssignee.SearchBeanForAssigneeImpl;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,11 +37,11 @@ public class ExportAssignee extends HttpServlet {
         String post = request.getParameter("postExport");
 
 
-        SearchBeanForAssignee searchBeanForAssignee = new SearchBeanForAssigneeImpl();
-        searchBeanForAssignee.setName(name);
-        searchBeanForAssignee.setLastName(lastName);
-        searchBeanForAssignee.setPost(post);
-        searchBeanForAssignee.exportAssigneeToXML();
+//        SearchBeanForAssignee searchBeanForAssignee = new SearchBeanForAssigneeImpl();
+//        searchBeanForAssignee.setName(name);
+//        searchBeanForAssignee.setLastName(lastName);
+//        searchBeanForAssignee.setPost(post);
+//        searchBeanForAssignee.exportAssigneeToXML();
 
 
     }
