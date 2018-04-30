@@ -1,11 +1,12 @@
-package labs.taskmanger.server.ejb.asssignee;
+package labs.taskmanger.server.ejb;
 
 import labs.taskmanger.common.entity.Assignee;
 
-import javax.ejb.EJBObject;
+import javax.ejb.Local;
 import java.util.List;
 
-public interface ManagerAssignee extends EJBObject {
+@Local
+public interface AssigneeMangerBeanLocal {
 
     int getId();
 
@@ -21,7 +22,7 @@ public interface ManagerAssignee extends EJBObject {
 
     void setPost(String post);
 
-    List<Assignee> searchAssigneeOnJSP ();
+    List<Assignee> searchAssigneeOnJSP (String name, String lastName);
 
     void exportAssigneeToXML ();
 }

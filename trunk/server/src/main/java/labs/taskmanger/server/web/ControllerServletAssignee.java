@@ -5,9 +5,9 @@ import labs.taskmanger.common.entity.AssigneeImpl;
 import labs.taskmanger.common.entity.Entity;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
-import labs.taskmanger.server.ejb.asssignee.SearchBeanForAssignee;
-import labs.taskmanger.server.ejb.asssignee.SearchBeanForAssigneeImpl;
+import labs.taskmanger.server.ejb.AssigneeMangerBeanLocal;
 
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +21,8 @@ import java.util.List;
 @WebServlet("/loadAssignee")
     public class ControllerServletAssignee extends HttpServlet {
 
+    @EJB
+    AssigneeMangerBeanLocal bean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,22 +40,22 @@ import java.util.List;
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        List<Assignee> assignees = new ArrayList<>();
 
         String name  = request.getParameter("name");
         String lastName  = request.getParameter("lastName");
 
-
-        SearchBeanForAssignee searchBeanForAssignee = new SearchBeanForAssigneeImpl();
-        searchBeanForAssignee.setName(name);
-        searchBeanForAssignee.setLastName(lastName);
-        List<Assignee> assignees = searchBeanForAssignee.searchAssigneeOnJSP();
+        assignees = bean.searchAssigneeOnJSP(name, lastName);
 
         request.setAttribute("assignees", assignees);
         RequestDispatcher dispatcher = request.getRequestDispatcher("allAssignee.jsp");
         dispatcher.forward(request, response);
+        }
 
 
-    }
+
+
+
 
     private List<Assignee> parseListEntityToListAssignee(List<Entity> entities) {
         Assignee assignee = new AssigneeImpl();

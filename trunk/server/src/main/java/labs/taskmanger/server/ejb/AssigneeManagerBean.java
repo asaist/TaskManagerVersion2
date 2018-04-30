@@ -1,4 +1,4 @@
-package labs.taskmanger.server.ejb.asssignee;
+package labs.taskmanger.server.ejb;
 
 import labs.taskmanger.common.entity.Assignee;
 import labs.taskmanger.common.entity.AssigneeImpl;
@@ -6,9 +6,7 @@ import labs.taskmanger.common.entity.Entity;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
 
-import javax.ejb.EJBException;
-import javax.ejb.SessionBean;
-import javax.ejb.SessionContext;
+import javax.ejb.Stateless;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -16,19 +14,18 @@ import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.Serializable;
 import java.io.StringWriter;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerAssigneeBean implements SessionBean, Serializable {
+@Stateless
+public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
+
     private int id;
     private String name;
     private String lastName;
     private String post;
-
-    public ManagerAssigneeBean(){}
+    private GenericDao<Assignee> assigneeDAO;
 
     public int getId() { return id; }
 
@@ -61,27 +58,26 @@ public class ManagerAssigneeBean implements SessionBean, Serializable {
 
 
 
-    public List<Assignee> searchAssigneeOnJSP (){
+    public List<Assignee> searchAssigneeOnJSP (String name, String lastName){
 
-        Assignee assignee1 = new AssigneeImpl();
-        GenericDao assigneeDAO = new JDBCDaoAssignee();
-        List<Entity> entities = assigneeDAO.readAll();
-        List<Assignee> assignees = parseListEntityToListAssignee(entities);
-        List<Assignee> assignees1 = new ArrayList<>();
+        Assignee assigneeResult = new AssigneeImpl();
+        assigneeDAO = new JDBCDaoAssignee();
+        List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
+        List<Assignee> assigneesResult = new ArrayList<>();
 
         for (Assignee assignee:assignees){
             if (assignee.getName().equals(name) && assignee.getLastName().equals(lastName)){
-                assignee1.setId(assignee.getId());
-                assignee1.setName(assignee.getName());
-                assignee1.setLastName(assignee.getLastName());
-                assignee1.setPost(assignee.getPost());
+                assigneeResult.setId(assignee.getId());
+                assigneeResult.setName(assignee.getName());
+                assigneeResult.setLastName(assignee.getLastName());
+                assigneeResult.setPost(assignee.getPost());
 
 
-                assignees1.add(assignee1);
+                assigneesResult.add(assigneeResult);
             }
         }
 
-        return assignees1;
+        return assigneesResult;
     }
 
     public void exportAssigneeToXML () {
@@ -99,13 +95,12 @@ public class ManagerAssigneeBean implements SessionBean, Serializable {
         }
     }
 
-    public static String marshal(AssigneeImpl assignee) throws JAXBException {
+    public String marshal(AssigneeImpl assignee) throws JAXBException {
         StringWriter stringWriter = new StringWriter();
 
         JAXBContext jaxbContext = JAXBContext.newInstance(AssigneeImpl.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-        // format the XML output
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
                 true);
 
@@ -132,27 +127,5 @@ public class ManagerAssigneeBean implements SessionBean, Serializable {
 
         }
         return assignees;
-    }
-
-
-
-    @Override
-    public void setSessionContext(SessionContext sessionContext) throws EJBException, RemoteException {
-
-    }
-
-    @Override
-    public void ejbRemove() throws EJBException, RemoteException {
-
-    }
-
-    @Override
-    public void ejbActivate() throws EJBException, RemoteException {
-
-    }
-
-    @Override
-    public void ejbPassivate() throws EJBException, RemoteException {
-
     }
 }

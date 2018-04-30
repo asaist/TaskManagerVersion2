@@ -3,8 +3,6 @@ package labs.taskmanger.server.web;
 import labs.taskmanger.common.entity.*;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoTask;
-import labs.taskmanger.server.ejb.task.SearchBeanForTask;
-import labs.taskmanger.server.ejb.task.SearchBeanForTaskImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,14 +40,14 @@ public class ControllerServletTask extends HttpServlet {
         String nameTask  = request.getParameter("nameTask");
         String status  = request.getParameter("post");
 
-        SearchBeanForTask searchBeanForTask = new SearchBeanForTaskImpl();
-        searchBeanForTask.setTaskName(nameTask);
-        searchBeanForTask.setStatus(status);
-        List<Task> tasks = searchBeanForTask.searchTaskOnJSP();
-
-        request.setAttribute("tasks", tasks);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("allTask.jsp");
-        dispatcher.forward(request, response);
+//        SearchBeanForTask searchBeanForTask = new SearchBeanForTaskImpl();
+//        searchBeanForTask.setTaskName(nameTask);
+//        searchBeanForTask.setStatus(status);
+//        List<Task> tasks = searchBeanForTask.searchTaskOnJSP();
+//
+//        request.setAttribute("tasks", tasks);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("allTask.jsp");
+//        dispatcher.forward(request, response);
 
 
     }
