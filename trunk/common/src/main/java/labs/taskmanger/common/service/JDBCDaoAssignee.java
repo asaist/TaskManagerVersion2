@@ -13,21 +13,24 @@ public class JDBCDaoAssignee extends JDBCDao<Assignee> {
     public Integer create(Assignee newInstance) {
         Connection connection = super.connectionToDatabase();
         Assignee assignee = (Assignee) newInstance;
-        try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO ASSIGNEE(ID, NAME, LASTNAME, POST) VALUES (ASSIGNEE_SEQUENCE.nextval, '"+assignee.getName()+"', '"+assignee.getLastName()+"', '"+assignee.getPost()+"')");
-            statement.executeUpdate();
-            System.out.println("Запись " + assignee.toString() + " добавлена в базу данных");
-            ResultSet resultSet = statement.executeQuery("select ID from Assignee");
 
-            while (resultSet.next()){
-               assignee.setId(resultSet.getInt("ID"));
+            try {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO ASSIGNEE(ID, NAME, LASTNAME, POST) VALUES (ASSIGNEE_SEQUENCE.nextval, '" + assignee.getName() + "', '" + assignee.getLastName() + "', '" + assignee.getPost() + "')");
+                statement.executeUpdate();
+                System.out.println("Запись " + assignee.toString() + " добавлена в базу данных");
+                ResultSet resultSet = statement.executeQuery("select ID from Assignee");
+
+                while (resultSet.next()) {
+                    assignee.setId(resultSet.getInt("ID"));
+                }
+                resultSet.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+
             }
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
 
-        }
+
         return assignee.getId();
     }
 

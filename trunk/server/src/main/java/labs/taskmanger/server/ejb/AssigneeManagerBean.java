@@ -60,25 +60,58 @@ public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
 
     public List<Assignee> searchAssigneeOnJSP (String name, String lastName){
 
-        Assignee assigneeResult = new AssigneeImpl();
+
         assigneeDAO = new JDBCDaoAssignee();
         List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
         List<Assignee> assigneesResult = new ArrayList<>();
 
         for (Assignee assignee:assignees){
             if (assignee.getName().equals(name) && assignee.getLastName().equals(lastName)){
-                assigneeResult.setId(assignee.getId());
-                assigneeResult.setName(assignee.getName());
-                assigneeResult.setLastName(assignee.getLastName());
-                assigneeResult.setPost(assignee.getPost());
 
-
-                assigneesResult.add(assigneeResult);
+                assigneesResult.add((Assignee) assigneeDAO.read(assignee.getId()));
             }
         }
 
         return assigneesResult;
     }
+
+    public void deleteAssigneeFromJSP (String name, String lastName, String post){
+
+        Assignee assigneeDelete = new AssigneeImpl(name, lastName, post);
+        assigneeDAO = new JDBCDaoAssignee();
+        List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
+        for (Assignee assignee:assignees){
+            if (assignee.equals(assigneeDelete)){
+                assigneeDAO.delete(assignee);
+            }
+        }
+
+    }
+
+    public void addAssigneeFromJSP (String name, String lastName, String post) {
+
+        Assignee assigneeAdd = new AssigneeImpl(name, lastName, post);
+        int numberEquals = 0;
+        assigneeDAO = new JDBCDaoAssignee();
+        List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
+        if (assignees.size() > 0) {
+            for (Assignee assignee : assignees) {
+                if (assigneeAdd.equals(assignee)) {
+                    System.out.println("Запись существует");
+                    numberEquals++;
+                }
+            }
+
+            if (numberEquals == 0) {
+                assigneeDAO.create(assigneeAdd);
+            }
+
+        } else {
+            assigneeDAO.create(assigneeAdd);
+        }
+    }
+
+
 
     public void exportAssigneeToXML () {
 
@@ -128,4 +161,6 @@ public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
         }
         return assignees;
     }
+
+
 }

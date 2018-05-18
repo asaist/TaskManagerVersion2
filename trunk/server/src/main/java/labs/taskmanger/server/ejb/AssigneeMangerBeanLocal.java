@@ -24,5 +24,9 @@ public interface AssigneeMangerBeanLocal {
 
     List<Assignee> searchAssigneeOnJSP (String name, String lastName);
 
+    void deleteAssigneeFromJSP (String name, String lastName, String post);
+
+    void addAssigneeFromJSP (String name, String lastName, String post);
+
     void exportAssigneeToXML ();
 }

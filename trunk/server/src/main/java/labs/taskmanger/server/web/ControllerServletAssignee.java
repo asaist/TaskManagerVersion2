@@ -41,20 +41,39 @@ import java.util.List;
             throws ServletException, IOException {
 
         List<Assignee> assignees = new ArrayList<>();
+        String action = request.getParameter("action");
+        String name = request.getParameter("nameAssignee");
+        String lastName = request.getParameter("lastNameAssignee");
+        String post = request.getParameter("postAssignee");
+        Assignee assignee = new AssigneeImpl(name, lastName,  post);
 
-        String name  = request.getParameter("name");
-        String lastName  = request.getParameter("lastName");
+        if ("Search".equals(action)) {
 
-        assignees = bean.searchAssigneeOnJSP(name, lastName);
+            assignees = bean.searchAssigneeOnJSP(assignee.getName(), assignee.getLastName());
+            request.setAttribute("assignees", assignees);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("allAssignee.jsp");
+            dispatcher.forward(request, response);
+        }
 
-        request.setAttribute("assignees", assignees);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("allAssignee.jsp");
-        dispatcher.forward(request, response);
+        if ("Add".equals(action)) {
+
+            bean.addAssigneeFromJSP(assignee.getName(), assignee.getLastName(), assignee.getPost());
+            doGet(request, response);
+        }
+
+        if ("Delete".equals(action)) {
+
+            bean.deleteAssigneeFromJSP(assignee.getName(), assignee.getLastName(), assignee.getPost());
+            doGet(request, response);
         }
 
 
 
 
+
+
+
+    }
 
 
     private List<Assignee> parseListEntityToListAssignee(List<Entity> entities) {

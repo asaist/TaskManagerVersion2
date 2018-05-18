@@ -2,8 +2,12 @@ package labs.taskmanger.server.web;
 
 import labs.taskmanger.common.entity.*;
 import labs.taskmanger.common.service.GenericDao;
+import labs.taskmanger.common.service.JDBCDaoAssignee;
 import labs.taskmanger.common.service.JDBCDaoTask;
+import labs.taskmanger.server.ejb.AssigneeMangerBeanLocal;
+import labs.taskmanger.server.ejb.TaskManagerBeanLocal;
 
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +21,8 @@ import java.util.List;
 @WebServlet("/loadTask")
 public class ControllerServletTask extends HttpServlet {
 
-
-
+    @EJB
+    TaskManagerBeanLocal bean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -36,21 +40,43 @@ public class ControllerServletTask extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        List<Task> tasks = new ArrayList<>();
+        String action = request.getParameter("action");
+        String nameTask = request.getParameter("nameTask");
+        String descriptionTask = request.getParameter("descriptionTask");
+        String deadlineTask = request.getParameter("deadlineTask");
+        String priorityTask = request.getParameter("priorityTask");
+        String statusTask = request.getParameter("statusTask");
+        Task task = new TaskImpl(nameTask, descriptionTask, deadlineTask, priorityTask, statusTask);
 
-        String nameTask  = request.getParameter("nameTask");
-        String status  = request.getParameter("post");
+        if ("Search".equals(action)) {
 
-//        SearchBeanForTask searchBeanForTask = new SearchBeanForTaskImpl();
-//        searchBeanForTask.setTaskName(nameTask);
-//        searchBeanForTask.setStatus(status);
-//        List<Task> tasks = searchBeanForTask.searchTaskOnJSP();
-//
-//        request.setAttribute("tasks", tasks);
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("allTask.jsp");
-//        dispatcher.forward(request, response);
+            tasks = bean.searchTaskOnJSP(task.getTaskName(), task.getStatus());
+            request.setAttribute("tasks", tasks);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("allTask.jsp");
+            dispatcher.forward(request, response);
+        }
+
+        if ("Add".equals(action)) {
+
+            bean.addTaskFromJSP(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority(), task.getStatus());
+            doGet(request, response);
+        }
+
+        if ("Delete".equals(action)) {
+
+            bean.deleteTaskFromJSP(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority(), task.getStatus());
+            doGet(request, response);
+        }
+
+
+
+
+
 
 
     }
+
 
     private List<Task> parseListEntityToListTask(List<Entity> entities) {
         Task task = new TaskImpl();
