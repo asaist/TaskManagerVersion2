@@ -3,6 +3,7 @@ package labs.taskmanger.server.web;
 import labs.taskmanger.common.entity.Assignee;
 import labs.taskmanger.common.entity.AssigneeImpl;
 import labs.taskmanger.common.entity.Entity;
+import labs.taskmanger.common.service.EAVCRDaoAssignee;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
 import labs.taskmanger.server.ejb.AssigneeMangerBeanLocal;
@@ -27,7 +28,8 @@ import java.util.List;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GenericDao assigneeDAO = new JDBCDaoAssignee();
+        //GenericDao assigneeDAO = new JDBCDaoAssignee();
+        EAVCRDaoAssignee assigneeDAO = new EAVCRDaoAssignee();
         List<Entity> entities = assigneeDAO.readAll();
         List<Assignee> assignees = parseListEntityToListAssignee(entities);
         request.setAttribute("assignees", assignees);

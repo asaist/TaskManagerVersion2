@@ -13,21 +13,6 @@ public abstract class JDBCDao<TEntity extends Entity> implements GenericDao<TEnt
 
 
 
-    public Integer create(TEntity newInstance) {
-        Connection connection = connectionToDatabase();
-        try {
-            Statement statement = connection.createStatement();
-
-            } catch (SQLException e) {
-
-        }
-
-
-        return null;
-    }
-
-
-
 
     public Connection connectionToDatabase() {
         final String USER_NAME = "system";

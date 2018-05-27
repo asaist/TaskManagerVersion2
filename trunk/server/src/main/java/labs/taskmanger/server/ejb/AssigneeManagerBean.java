@@ -3,6 +3,7 @@ package labs.taskmanger.server.ejb;
 import labs.taskmanger.common.entity.Assignee;
 import labs.taskmanger.common.entity.AssigneeImpl;
 import labs.taskmanger.common.entity.Entity;
+import labs.taskmanger.common.service.EAVCRDaoAssignee;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
 
@@ -26,6 +27,7 @@ public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
     private String lastName;
     private String post;
     private GenericDao<Assignee> assigneeDAO;
+    private EAVCRDaoAssignee assigneeEavCrDAO;
 
     public int getId() { return id; }
 
@@ -60,15 +62,18 @@ public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
 
     public List<Assignee> searchAssigneeOnJSP (String name, String lastName){
 
-
-        assigneeDAO = new JDBCDaoAssignee();
-        List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
+        assigneeEavCrDAO = new EAVCRDaoAssignee();
+        List<Assignee> assignees = parseListEntityToListAssignee(assigneeEavCrDAO.readAll());
+//        assigneeDAO = new JDBCDaoAssignee();
+//        List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
         List<Assignee> assigneesResult = new ArrayList<>();
 
         for (Assignee assignee:assignees){
             if (assignee.getName().equals(name) && assignee.getLastName().equals(lastName)){
 
-                assigneesResult.add((Assignee) assigneeDAO.read(assignee.getId()));
+                assigneesResult.add((Assignee) assigneeEavCrDAO.read(assignee.getId()));
+
+                //assigneesResult.add((Assignee) assigneeDAO.read(assignee.getId()));
             }
         }
 
