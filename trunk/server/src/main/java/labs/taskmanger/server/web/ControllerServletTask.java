@@ -1,6 +1,7 @@
 package labs.taskmanger.server.web;
 
 import labs.taskmanger.common.entity.*;
+import labs.taskmanger.common.service.EAVCRDaoTask;
 import labs.taskmanger.common.service.GenericDao;
 import labs.taskmanger.common.service.JDBCDaoAssignee;
 import labs.taskmanger.common.service.JDBCDaoTask;
@@ -27,7 +28,8 @@ public class ControllerServletTask extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        GenericDao taskDAO = new JDBCDaoTask();
+        //GenericDao taskDAO = new JDBCDaoTask();
+        EAVCRDaoTask taskDAO = new EAVCRDaoTask();
         List<Entity> entities = taskDAO.readAll();
         List<Task> tasks = parseListEntityToListTask(entities);
         request.setAttribute("tasks", tasks);

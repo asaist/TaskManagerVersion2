@@ -1,9 +1,7 @@
 package labs.taskmanger.server.ejb;
 
 import labs.taskmanger.common.entity.*;
-import labs.taskmanger.common.service.GenericDao;
-import labs.taskmanger.common.service.JDBCDaoAssignee;
-import labs.taskmanger.common.service.JDBCDaoTask;
+import labs.taskmanger.common.service.*;
 
 import javax.ejb.Stateless;
 import javax.xml.bind.JAXBContext;
@@ -26,7 +24,8 @@ public class TaskManagerBean implements TaskManagerBeanLocal {
     String deadline;
     String priority;
     String status;
-    private GenericDao<Task> taskDAO;
+    //private GenericDao<Task> taskDAO;
+    private EAVCRDaoTask taskDAO;
 
 
     @Override
@@ -92,12 +91,16 @@ public class TaskManagerBean implements TaskManagerBeanLocal {
     public List<Task> searchTaskOnJSP (String name, String status){
 
 
-        taskDAO = new JDBCDaoTask();
+       // taskDAO = new JDBCDaoTask();
+        taskDAO = new EAVCRDaoTask();
         List<Task> tasks = parseListEntityToListTask(taskDAO.readAll());
+
+
         List<Task> tasksResult = new ArrayList<>();
 
         for (Task task:tasks){
             if (task.getTaskName().equals(name) && task.getStatus().equals(status)){
+
 
                 tasksResult.add((Task) taskDAO.read(task.getId()));
             }
@@ -109,7 +112,8 @@ public class TaskManagerBean implements TaskManagerBeanLocal {
     public void deleteTaskFromJSP (String taskName, String description, String deadline, String priority, String status){
 
         Task taskDelete = new TaskImpl(taskName, description,deadline, priority, status);
-        taskDAO = new JDBCDaoTask();
+        // taskDAO = new JDBCDaoTask();
+        taskDAO = new EAVCRDaoTask();
         List<Task> tasks = parseListEntityToListTask(taskDAO.readAll());
         for (Task task : tasks){
             if (task.equals(taskDelete)){
@@ -122,7 +126,8 @@ public class TaskManagerBean implements TaskManagerBeanLocal {
     public void addTaskFromJSP (String taskName, String description, String deadline, String priority, String status) {
 
         Task taskAdd = new TaskImpl(taskName, description, deadline, priority, status);
-        taskDAO = new JDBCDaoTask();
+        // taskDAO = new JDBCDaoTask();
+        taskDAO = new EAVCRDaoTask();
         int numberEquals = 0;
         List<Task> tasks = parseListEntityToListTask(taskDAO.readAll());
         if (tasks.size() > 0) {

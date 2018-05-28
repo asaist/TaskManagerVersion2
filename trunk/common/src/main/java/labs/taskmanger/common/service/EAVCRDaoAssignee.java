@@ -14,40 +14,10 @@ public class EAVCRDaoAssignee extends JDBCDao<Assignee> {
     final static Integer LAST_NAME_ID = 2;
     final static Integer POST_ID = 3;
 
+    final static Integer ASSIGNEE_ID = 1;
+
     public Integer create(Assignee newInstance) {
-//            Connection connection = super.connectionToDatabase();
-//                Assignee assignee = (Assignee) newInstance;
-//
-//                try {
-//                    PreparedStatement statementObject = connection.prepareStatement("INSERT INTO OBJECT(OBJECT_ID, OBJECT_TYPE_ID, NAME) VALUES (OBJECT_SEQUENCE.nextval, SELECT OBJECT_TYPE_ID FROM OBJECT_TYPE WHERE NAME='ASSIGNEE', '" + assignee.toString() + "')");
-//                    statementObject.executeUpdate();
-//                    statementObject.close();
-//                    PreparedStatement statementName = connection.prepareStatement("INSERT INTO PARAMS(OBJECT_ID, ATTRIBUTE_ID, VALUE) VALUES (SELECT OBJECT_ID FROM OBJECT WHERE NAME='" + assignee.toString() + "', SELECT ATTRIBUTE_ID FROM ATTRIBUTES WHERE NAME='NAME', '" + assignee.getName() + "')");
-//                    statementName.executeUpdate();
-//                ResultSet resultSet = statementObject.executeQuery("SELECT OBJECT_ID FROM OBJECT ");
-//
-//                while (resultSet.next()) {
-//                    assignee.setId(resultSet.getInt("OBJECT_ID"));
-//                }
-//                resultSet.close();
-//                statementName.close();
-//
-//                PreparedStatement statementLastName = connection.prepareStatement("INSERT INTO PARAMS(OBJECT_ID, ATTRIBUTE_ID, VALUE) VALUES (SELECT OBJECT_ID FROM OBJECT WHERE NAME='" + assignee.toString() + "', SELECT ATTRIBUTE_ID FROM ATTRIBUTES WHERE NAME='LAST_NAME', '" + assignee.getLastName() + "')");
-//                statementLastName.executeUpdate();
-//                statementLastName.close();
-//
-//                PreparedStatement statementPost = connection.prepareStatement("INSERT INTO PARAMS(OBJECT_ID, ATTRIBUTE_ID, VALUE) VALUES (SELECT OBJECT_ID FROM OBJECT WHERE NAME='" + assignee.toString() + "', SELECT ATTRIBUTE_ID FROM ATTRIBUTES WHERE NAME='POST', '" + assignee.getPost() + "')");
-//                statementPost.executeUpdate();
-//                statementPost.close();
-//
-//                connection.close();
-//                System.out.println("Запись " + assignee.toString() + " добавлена в базу данных");
-//            } catch (SQLException e) {
-//
-//            }
-//
-//
-//            return assignee.getId();
+
         return null;
         }
 
@@ -104,7 +74,7 @@ public class EAVCRDaoAssignee extends JDBCDao<Assignee> {
 
         try {
             Statement statementId = connection.createStatement();
-            ResultSet resultSetId = statementId.executeQuery("SELECT OBJECT_ID FROM PARAMS GROUP BY OBJECT_ID");
+            ResultSet resultSetId = statementId.executeQuery("SELECT OBJECT_ID FROM OBJECT WHERE OBJECT_TYPE_ID = '" + ASSIGNEE_ID + "' ");
             while (resultSetId.next()) {
                 Assignee assignee = new AssigneeImpl();
                 Statement statementValue = connection.createStatement();
