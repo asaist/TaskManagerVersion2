@@ -55,6 +55,8 @@ public class ControllerServletTask extends HttpServlet {
 
             tasks = bean.searchTaskOnJSP(task.getTaskName(), task.getStatus());
             request.setAttribute("tasks", tasks);
+            request.setAttribute("taskName", nameTask);
+            request.setAttribute("status", statusTask);
             RequestDispatcher dispatcher = request.getRequestDispatcher("allTask.jsp");
             dispatcher.forward(request, response);
         }
@@ -62,19 +64,24 @@ public class ControllerServletTask extends HttpServlet {
         if ("Add".equals(action)) {
 
             bean.addTaskFromJSP(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority(), task.getStatus());
+            request.setAttribute("taskName", nameTask);
+            request.setAttribute("description", descriptionTask);
+            request.setAttribute("deadline", deadlineTask);
+            request.setAttribute("priority", priorityTask);
+            request.setAttribute("status", statusTask);
             doGet(request, response);
         }
 
         if ("Delete".equals(action)) {
 
             bean.deleteTaskFromJSP(task.getTaskName(), task.getDescription(), task.getDeadline(), task.getPriority(), task.getStatus());
+            request.setAttribute("taskName", nameTask);
+            request.setAttribute("description", descriptionTask);
+            request.setAttribute("deadline", deadlineTask);
+            request.setAttribute("priority", priorityTask);
+            request.setAttribute("status", statusTask);
             doGet(request, response);
         }
-
-
-
-
-
 
 
     }

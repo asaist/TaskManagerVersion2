@@ -68,16 +68,27 @@
         </tr>
     </table>
 
+    <table>
+
+    <tr>
+        <th>
+            TASK NAME
+        </th>
+
+        <th>
+            STATUS
+        </th>
+
+    </tr>
+
     <tr>
         <form name="searchForm" action="loadTask" method="post">
-            <td> <input type="text" name="nameTask" value="TaskName" /></td>
-            <td> <input type="text" name="descriptionTask" value="Description" /></td>
-            <td> <input type="text" name="deadlineTask" value="2016-11-09 10:30" /></td>
-            <td> <input type="text" name="priorityTask" value="Priority" /></td>
-            <td> <input type="text" name="statusTask" value="Status" /></td>
+            <td> <input type="text" name="nameTask" value="<c:out value = "${taskName}" />" /></td>
+            <td> <input type="text" name="statusTask" value="<c:out value = "${status}" />" /></td>
             <td><input type="Submit" name="action" value="Search"></td>
         </form>
     </tr>
+    </table>
 
     <table>
         <tr>
@@ -85,16 +96,42 @@
         </tr>
     </table>
 
+
+    <table>
+
+        <tr>
+            <th>
+                TASK NAME
+            </th>
+
+            <th>
+                DESCRIPTION
+            </th>
+
+            <th>
+                DEADLINE
+            </th>
+
+            <th>
+                PRIORITY
+            </th>
+
+            <th>
+                STATUS
+            </th>
+
+        </tr>
     <tr>
         <form name="addForm" action="loadTask" method="post">
-            <td> <input type="text" name="nameTask" value="TaskName" /></td>
-            <td> <input type="text" name="descriptionTask" value="Description" /></td>
-            <td> <input type="text" name="deadlineTask" value="2016-11-09 10:30" /></td>
-            <td> <input type="text" name="priorityTask" value="Priority" /></td>
-            <td> <input type="text" name="statusTask" value="Status" /></td>
+            <td> <input type="text" name="nameTask" value="<c:out value = "${taskName}" />" /></td>
+            <td> <input type="text" name="descriptionTask" value="<c:out value = "${description}" />" /></td>
+            <td> <input type="text" name="deadlineTask" value="<c:out value = "${deadline}" />" /></td>
+            <td> <input type="text" name="priorityTask" value="<c:out value = "${priority}" />" /></td>
+            <td> <input type="text" name="statusTask" value="<c:out value = "${status}" />" /></td>
             <td><input type="Submit" name="action" value="Add"></td>
         </form>
     </tr>
+</table>
 
     <table>
         <tr>
@@ -102,16 +139,42 @@
         </tr>
     </table>
 
+
+    <table>
+
+        <tr>
+            <th>
+                TASK NAME
+            </th>
+
+            <th>
+                DESCRIPTION
+            </th>
+
+            <th>
+                DEADLINE
+            </th>
+
+            <th>
+                PRIORITY
+            </th>
+
+            <th>
+                STATUS
+            </th>
+
+        </tr>
     <tr>
         <form name="deleteForm" action="loadTask" method="post">
-            <td> <input type="text" name="nameTask" value="TaskName" /></td>
-            <td> <input type="text" name="descriptionTask" value="Description" /></td>
-            <td> <input type="text" name="deadlineTask" value="2016-11-09 10:30" /></td>
-            <td> <input type="text" name="priorityTask" value="Priority" /></td>
-            <td> <input type="text" name="statusTask" value="Status" /></td>
+            <td> <input type="text" name="nameTask" value="<c:out value = "${taskName}" />" /></td>
+            <td> <input type="text" name="descriptionTask" value="<c:out value = "${description}" />" /></td>
+            <td> <input type="text" name="deadlineTask" value="<c:out value = "${deadline}" />" /></td>
+            <td> <input type="text" name="priorityTask" value="<c:out value = "${priority}" />" /></td>
+            <td> <input type="text" name="statusTask" value="<c:out value = "${status}" />" /></td>
             <td><input type="Submit" name="action" value="Delete"></td>
         </form>
     </tr>
+    </table>
 
 </table>
 

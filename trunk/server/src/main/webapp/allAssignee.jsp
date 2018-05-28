@@ -55,13 +55,26 @@
         </tr>
     </table>
 
+    <table>
+    <tr>
+        <th>
+            NAME
+        </th>
+
+        <th>
+            LAST NAME
+        </th>
+    </tr>
+
     <tr>
         <form name="searchForm" action="loadAssignee" method="post">
-            <td><input type="text" name="nameAssignee" value="Name"></td>
-            <td><input type="text" name="lastNameAssignee" value="Last Name"></td>
+
+            <td><input type="text" name="nameAssignee" value="<c:out value = "${name}" />"></td>
+            <td><input type="text" name="lastNameAssignee" value="<c:out value = "${lastName}" />"></td>
             <td><input type="Submit" name="action" value="Search"></td>
         </form>
     </tr>
+    </table>
 
     <table>
         <tr>
@@ -69,14 +82,29 @@
         </tr>
     </table>
 
+    <table>
+        <tr>
+            <th>
+                NAME
+            </th>
+
+            <th>
+                LAST NAME
+            </th>
+
+            <th>
+                POST
+            </th>
+        </tr>
     <tr>
         <form name="addForm" action="loadAssignee" method="post">
-            <td><input type="text" name="nameAssignee" value="Name"></td>
-            <td><input type="text" name="lastNameAssignee" value="Last Name"></td>
-            <td><input type="text" name="postAssignee" value="Post"></td>
+            <td><input type="text" name="nameAssignee" value="<c:out value = "${name}" />"></td>
+            <td><input type="text" name="lastNameAssignee" value="<c:out value = "${lastName}" />"></td>
+            <td><input type="text" name="postAssignee" value="<c:out value = "${post}" />"></td>
             <td><input type="Submit" name="action" value="Add"></td>
         </form>
     </tr>
+    </table>
 
     <table>
         <tr>
@@ -84,14 +112,31 @@
         </tr>
     </table>
 
+    <table>
+        <tr>
+            <th>
+                NAME
+            </th>
+
+            <th>
+                LAST NAME
+            </th>
+
+            <th>
+                POST
+            </th>
+        </tr>
+
     <tr>
         <form name="deleteForm" action="loadAssignee" method="post">
-            <td><input type="text" name="nameAssignee" value="Name"></td>
-            <td><input type="text" name="lastNameAssignee" value="Last Name"></td>
-            <td><input type="text" name="postAssignee" value="Post"></td>
+            <td><input type="text" name="nameAssignee" value="<c:out value = "${name}" />"></td>
+            <td><input type="text" name="lastNameAssignee" value="<c:out value = "${lastName}" />"></td>
+            <td><input type="text" name="postAssignee" value="<c:out value = "${post}" />"></td>
             <td><input type="Submit" name="action" value="Delete"></td>
         </form>
     </tr>
+
+</table>
 
 </table>
 
