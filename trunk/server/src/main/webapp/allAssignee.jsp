@@ -69,8 +69,8 @@
     <tr>
         <form name="searchForm" action="loadAssignee" method="post">
 
-            <td><input type="text" name="nameAssignee" value="<c:out value = "${name}" />"></td>
-            <td><input type="text" name="lastNameAssignee" value="<c:out value = "${lastName}" />"></td>
+            <td><input type="text" name="nameAssignee" value="<c:out value = "${nameSearch}" />"></td>
+            <td><input type="text" name="lastNameAssignee" value="<c:out value = "${lastNameSearch}" />"></td>
             <td><input type="Submit" name="action" value="Search"></td>
         </form>
     </tr>
@@ -98,9 +98,9 @@
         </tr>
     <tr>
         <form name="addForm" action="loadAssignee" method="post">
-            <td><input type="text" name="nameAssignee" value="<c:out value = "${name}" />"></td>
-            <td><input type="text" name="lastNameAssignee" value="<c:out value = "${lastName}" />"></td>
-            <td><input type="text" name="postAssignee" value="<c:out value = "${post}" />"></td>
+            <td><input type="text" name="nameAssignee" value="<c:out value = "${nameAdd}" />"></td>
+            <td><input type="text" name="lastNameAssignee" value="<c:out value = "${lastNameAdd}" />"></td>
+            <td><input type="text" name="postAssignee" value="<c:out value = "${postAdd}" />"></td>
             <td><input type="Submit" name="action" value="Add"></td>
         </form>
     </tr>
@@ -129,9 +129,9 @@
 
     <tr>
         <form name="deleteForm" action="loadAssignee" method="post">
-            <td><input type="text" name="nameAssignee" value="<c:out value = "${name}" />"></td>
-            <td><input type="text" name="lastNameAssignee" value="<c:out value = "${lastName}" />"></td>
-            <td><input type="text" name="postAssignee" value="<c:out value = "${post}" />"></td>
+            <td><input type="text" name="nameAssignee" value="<c:out value = "${nameDelete}" />"></td>
+            <td><input type="text" name="lastNameAssignee" value="<c:out value = "${lastNameDelete}" />"></td>
+            <td><input type="text" name="postAssignee" value="<c:out value = "${postDelete}" />"></td>
             <td><input type="Submit" name="action" value="Delete"></td>
         </form>
     </tr>

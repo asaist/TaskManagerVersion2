@@ -53,8 +53,8 @@ import java.util.List;
 
             assignees = bean.searchAssigneeOnJSP(assignee.getName(), assignee.getLastName());
             request.setAttribute("assignees", assignees);
-            request.setAttribute("name", name);
-            request.setAttribute("lastName", lastName);
+            request.setAttribute("nameSearch", name);
+            request.setAttribute("lastNameSearch", lastName);
             RequestDispatcher dispatcher = request.getRequestDispatcher("allAssignee.jsp");
             dispatcher.forward(request, response);
         }
@@ -62,18 +62,18 @@ import java.util.List;
         if ("Add".equals(action)) {
 
             bean.addAssigneeFromJSP(assignee.getName(), assignee.getLastName(), assignee.getPost());
-            request.setAttribute("name", name);
-            request.setAttribute("lastName", lastName);
-            request.setAttribute("post", post);
+            request.setAttribute("nameAdd", name);
+            request.setAttribute("lastNameAdd", lastName);
+            request.setAttribute("postAdd", post);
             doGet(request, response);
         }
 
         if ("Delete".equals(action)) {
 
             bean.deleteAssigneeFromJSP(assignee.getName(), assignee.getLastName(), assignee.getPost());
-            request.setAttribute("name", name);
-            request.setAttribute("lastName", lastName);
-            request.setAttribute("post", post);
+            request.setAttribute("nameDelete", name);
+            request.setAttribute("lastNameDelete", lastName);
+            request.setAttribute("postDelete", post);
             doGet(request, response);
         }
 

@@ -17,9 +17,41 @@ public class EAVCRDaoAssignee extends JDBCDao<Assignee> {
     final static Integer ASSIGNEE_ID = 1;
 
     public Integer create(Assignee newInstance) {
+        Connection connection = super.connectionToDatabase();
+        Assignee assignee = (Assignee) newInstance;
 
-        return null;
+
+        try {
+            Statement statementObject = connection.createStatement();
+            statementObject.executeUpdate("INSERT INTO OBJECT(OBJECT_ID, OBJECT_TYPE_ID, NAME) VALUES (OBJECT_SEQUENCE.nextval, '" + ASSIGNEE_ID + "' , '" + assignee.toString() + "'");
+
+            ResultSet resultSet = statementObject.executeQuery("SELECT OBJECT_ID FROM OBJECT");
+            while (resultSet.next()) {
+                assignee.setId(resultSet.getInt("OBJECT_ID"));
+            }
+            resultSet.close();
+            statementObject.close();
+
+            Statement statementName = connection.createStatement();
+            statementName.executeUpdate("INSERT INTO PARAMS(OBJECT_ID, ATTRIBUTE_ID, VALUE) VALUES ('" + assignee.getId() + "', '" + NAME_ID + "', '" + assignee.getName() + "'");
+            statementName.close();
+            Statement statementLastName = connection.createStatement();
+            statementLastName.executeUpdate("INSERT INTO PARAMS(OBJECT_ID, ATTRIBUTE_ID, VALUE) VALUES ('" + assignee.getId() + "', '" + LAST_NAME_ID + "', '" + assignee.getLastName() + "'");
+            statementLastName.close();
+            Statement statementPost = connection.createStatement();
+            statementPost.executeUpdate("INSERT INTO PARAMS(OBJECT_ID, ATTRIBUTE_ID, VALUE) VALUES ('" + assignee.getId() + "', '" + POST_ID + "', '" + assignee.getPost() + "'");
+            statementPost.close();
+
+            System.out.println("Запись " + assignee.toString() + " добавлена в базу данных");
+            connection.close();
+        } catch (SQLException e) {
+
         }
+
+
+        return assignee.getId();
+        }
+
 
     public Entity read(Integer id) {
 

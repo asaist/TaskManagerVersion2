@@ -26,8 +26,8 @@ public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
     private String name;
     private String lastName;
     private String post;
-    private GenericDao<Assignee> assigneeDAO;
-    private EAVCRDaoAssignee assigneeEavCrDAO;
+    //private GenericDao<Assignee> assigneeDAO;
+    private EAVCRDaoAssignee assigneeDAO;
 
     public int getId() { return id; }
 
@@ -62,8 +62,8 @@ public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
 
     public List<Assignee> searchAssigneeOnJSP (String name, String lastName){
 
-        assigneeEavCrDAO = new EAVCRDaoAssignee();
-        List<Assignee> assignees = parseListEntityToListAssignee(assigneeEavCrDAO.readAll());
+        assigneeDAO = new EAVCRDaoAssignee();
+        List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
 //        assigneeDAO = new JDBCDaoAssignee();
 //        List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
         List<Assignee> assigneesResult = new ArrayList<>();
@@ -71,7 +71,7 @@ public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
         for (Assignee assignee:assignees){
             if (assignee.getName().equals(name) && assignee.getLastName().equals(lastName)){
 
-                assigneesResult.add((Assignee) assigneeEavCrDAO.read(assignee.getId()));
+                assigneesResult.add((Assignee) assigneeDAO.read(assignee.getId()));
 
                 //assigneesResult.add((Assignee) assigneeDAO.read(assignee.getId()));
             }
@@ -83,7 +83,8 @@ public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
     public void deleteAssigneeFromJSP (String name, String lastName, String post){
 
         Assignee assigneeDelete = new AssigneeImpl(name, lastName, post);
-        assigneeDAO = new JDBCDaoAssignee();
+       // assigneeDAO = new JDBCDaoAssignee();
+        assigneeDAO = new EAVCRDaoAssignee();
         List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
         for (Assignee assignee:assignees){
             if (assignee.equals(assigneeDelete)){
@@ -97,7 +98,8 @@ public class AssigneeManagerBean implements AssigneeMangerBeanLocal {
 
         Assignee assigneeAdd = new AssigneeImpl(name, lastName, post);
         int numberEquals = 0;
-        assigneeDAO = new JDBCDaoAssignee();
+        //assigneeDAO = new JDBCDaoAssignee();
+        assigneeDAO = new EAVCRDaoAssignee();
         List<Assignee> assignees = parseListEntityToListAssignee(assigneeDAO.readAll());
         if (assignees.size() > 0) {
             for (Assignee assignee : assignees) {

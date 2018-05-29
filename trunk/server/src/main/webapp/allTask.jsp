@@ -83,8 +83,8 @@
 
     <tr>
         <form name="searchForm" action="loadTask" method="post">
-            <td> <input type="text" name="nameTask" value="<c:out value = "${taskName}" />" /></td>
-            <td> <input type="text" name="statusTask" value="<c:out value = "${status}" />" /></td>
+            <td> <input type="text" name="nameTask" value="<c:out value = "${taskNameSearch}" />" /></td>
+            <td> <input type="text" name="statusTask" value="<c:out value = "${statusSearch}" />" /></td>
             <td><input type="Submit" name="action" value="Search"></td>
         </form>
     </tr>
@@ -123,11 +123,11 @@
         </tr>
     <tr>
         <form name="addForm" action="loadTask" method="post">
-            <td> <input type="text" name="nameTask" value="<c:out value = "${taskName}" />" /></td>
-            <td> <input type="text" name="descriptionTask" value="<c:out value = "${description}" />" /></td>
-            <td> <input type="text" name="deadlineTask" value="<c:out value = "${deadline}" />" /></td>
-            <td> <input type="text" name="priorityTask" value="<c:out value = "${priority}" />" /></td>
-            <td> <input type="text" name="statusTask" value="<c:out value = "${status}" />" /></td>
+            <td> <input type="text" name="nameTask" value="<c:out value = "${taskNameAdd}" />" /></td>
+            <td> <input type="text" name="descriptionTask" value="<c:out value = "${descriptionAdd}" />" /></td>
+            <td> <input type="text" name="deadlineTask" value="<c:out value = "${deadlineAdd}" />" /></td>
+            <td> <input type="text" name="priorityTask" value="<c:out value = "${priorityAdd}" />" /></td>
+            <td> <input type="text" name="statusTask" value="<c:out value = "${statusAdd}" />" /></td>
             <td><input type="Submit" name="action" value="Add"></td>
         </form>
     </tr>
@@ -166,11 +166,11 @@
         </tr>
     <tr>
         <form name="deleteForm" action="loadTask" method="post">
-            <td> <input type="text" name="nameTask" value="<c:out value = "${taskName}" />" /></td>
-            <td> <input type="text" name="descriptionTask" value="<c:out value = "${description}" />" /></td>
-            <td> <input type="text" name="deadlineTask" value="<c:out value = "${deadline}" />" /></td>
-            <td> <input type="text" name="priorityTask" value="<c:out value = "${priority}" />" /></td>
-            <td> <input type="text" name="statusTask" value="<c:out value = "${status}" />" /></td>
+            <td> <input type="text" name="nameTask" value="<c:out value = "${taskNameDelete}" />" /></td>
+            <td> <input type="text" name="descriptionTask" value="<c:out value = "${descriptionDelete}" />" /></td>
+            <td> <input type="text" name="deadlineTask" value="<c:out value = "${deadlineDelete}" />" /></td>
+            <td> <input type="text" name="priorityTask" value="<c:out value = "${priorityDelete}" />" /></td>
+            <td> <input type="text" name="statusTask" value="<c:out value = "${statusDelete}" />" /></td>
             <td><input type="Submit" name="action" value="Delete"></td>
         </form>
     </tr>
